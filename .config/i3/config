@@ -129,6 +129,10 @@ bindsym $mod+Shift+8 move container to workspace $ws8
 bindsym $mod+Shift+9 move container to workspace $ws9
 bindsym $mod+Shift+0 move container to workspace $ws10
 
+#move workspace to monitor
+bindsym $mod+m move workspace to output left
+bindsym $mod+Shift+m move workspace to output right
+
 # lock
 bindsym $mod+Shift+x exec i3lock --color=1f1f1f; exec systemctl suspend
 
@@ -172,8 +176,8 @@ bar {
         status_command i3status
 		tray_output primary
 }
-exec "setxkbmap -layout us,se"
-exec "setxkbmap -option 'grp:alt_caps_toggle'"
+exec --no-startup-id setxkbmap -layout us,se
+exec --no-startup-id setxkbmap -option 'grp:alt_caps_toggle'
 
 bindsym XF86MonBrightnessUp exec light -A 10 #increase backlight
 bindsym XF86MonBrightnessDown exec light -U 10 #decrease backlight
