@@ -176,8 +176,7 @@ bar {
         status_command i3status
 		tray_output primary
 }
-exec --no-startup-id setxkbmap -layout us,se
-exec --no-startup-id setxkbmap -option 'grp:alt_caps_toggle'
+exec --no-startup-id setxkbmap -layout us,se -option 'grp:alt_caps_toggle'
 
 bindsym XF86MonBrightnessUp exec light -A 10 #increase backlight
 bindsym XF86MonBrightnessDown exec light -U 10 #decrease backlight
@@ -188,6 +187,8 @@ bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #d
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
-bindsym XF86AudioPause exec playerctl pause
+bindsym XF86AudioPause exec --no-startup-id playerctl pause
 bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
+bindsym Print exec --no-startup-id gnome-screenshot
+bindsym Shift+Print exec --no-startup-id gnome-screenshot -a
