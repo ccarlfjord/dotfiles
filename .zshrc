@@ -64,10 +64,10 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  #docker
-  #kubectl
-  #golang
-  #npm
+  docker
+  # kubectl
+  golang
+  npm
   # zsh-completions
 )
 source $ZSH/oh-my-zsh.sh
@@ -108,7 +108,7 @@ export EDITOR='vim'
 # Go stuff
 export GOPATH=$HOME/go:$HOME/git/be/go
 export GOROOT=/usr/local/go
-export PATH=$PATH:$GOPATH/bin:$GOROOT/bin
+export PATH=$PATH:$HOME/go/bin:$GOROOT/bin
 
 # AWS autocomplete
 #source "$(which aws_zsh_completer.sh)"

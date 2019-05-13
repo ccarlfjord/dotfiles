@@ -134,7 +134,7 @@ bindsym $mod+m move workspace to output left
 bindsym $mod+Shift+m move workspace to output right
 
 # lock
-bindsym $mod+Shift+x exec i3lock --color=1f1f1f; exec systemctl suspend
+bindsym $mod+Shift+x exec systemctl suspend
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
@@ -182,8 +182,8 @@ bindsym XF86MonBrightnessUp exec light -A 10 #increase backlight
 bindsym XF86MonBrightnessDown exec light -U 10 #decrease backlight
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume alsa_output.usb-FiiO_DigiHug_USB_Audio-01.iec958-stereo +5% #increase sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume alsa_output.usb-FiiO_DigiHug_USB_Audio-01.iec958-stereo -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
