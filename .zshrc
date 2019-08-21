@@ -70,6 +70,7 @@ plugins=(
   npm
   # zsh-completions
 )
+DISABLE_MAGIC_FUNCTIONS=true
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -109,19 +110,33 @@ export EDITOR='vim'
 export GOPATH=$HOME/go:$HOME/git/be/go
 export GOROOT=/usr/local/go
 export PATH=$PATH:$HOME/go/bin:$GOROOT/bin
+# Add npm path
+export PATH=$PATH:$HOME/.npm/global/bin
 
 # AWS autocomplete
 #source "$(which aws_zsh_completer.sh)"
 
-alias currdate='date +"%y-%m-%d"'
-alias notes='vim $HOME/notes/$(currdate).txt'
+alias currdate='date +"%Y-%m-%d"'
+alias notes='vim $HOME/notes/$(currdate).md'
 alias cdbe='cd $HOME/git/be'
 alias cdco='cd $HOME/git/config'
 alias gopathbe='export GOPATH=$GOPATH:$HOME/git/be/go'
 alias cdtrunk='cd $HOME/git/be'
 alias cdfe='cd /var/www/html/fe/trunk'
 alias cdgo='cd $HOME/git/be/go'
+#alias svnversion=gitversion
+alias open='xdg-open'
 
+gitversion() {
+	info=$(git svn info 2>/dev/null)
+	EXITCODE=$?
+	if [[ $EXITCODE -ne 0 ]]
+	then
+		/usr/bin/svnversion
+	else
+		printf $info | grep '^Revision: ' | cut -d ' ' -f2
+	fi
+}
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '$HOME/bin/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/bin/google-cloud-sdk/path.zsh.inc'; fi
@@ -135,3 +150,10 @@ alias rundoc='godoc -http ":6060" -index -index_files $HOME/godoc_index -play'
 #source $ZSH/_subversion
 
 export TERMINAL=gnome-terminal
+
+# kubectl zsh completion
+#source <(kubectl completion zsh)
+
+# kubeadm zsh completion
+# source <(kubeadm completion zsh)
+source /usr/share/zsh/site-functions/aws_zsh_completer.sh
