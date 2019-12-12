@@ -62,15 +62,16 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
+#
 plugins=(
   git
   docker
-  # kubectl
+  #kubectl
   golang
-  npm
-  # zsh-completions
+  #npm
+  #zsh-completions
 )
-DISABLE_MAGIC_FUNCTIONS=true
+#DISABLE_MAGIC_FUNCTIONS=true
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
@@ -112,20 +113,23 @@ export GOROOT=/usr/local/go
 export PATH=$PATH:$HOME/go/bin:$GOROOT/bin
 # Add npm path
 export PATH=$PATH:$HOME/.npm/global/bin
+# Add $HOME/.local/bin
+export PATH=$PATH:$HOME/.local/bin
 
 # AWS autocomplete
 #source "$(which aws_zsh_completer.sh)"
 
 alias currdate='date +"%Y-%m-%d"'
-alias notes='vim $HOME/notes/$(currdate).md'
+alias notes='vim $HOME/Documents/Notes/$(currdate).md'
 alias cdbe='cd $HOME/git/be'
 alias cdco='cd $HOME/git/config'
 alias gopathbe='export GOPATH=$GOPATH:$HOME/git/be/go'
 alias cdtrunk='cd $HOME/git/be'
 alias cdfe='cd /var/www/html/fe/trunk'
 alias cdgo='cd $HOME/git/be/go'
-#alias svnversion=gitversion
+alias svnversion=gitversion
 alias open='xdg-open'
+alias aws-decode-message='aws sts decode-authorization-message --encoded-message'
 
 gitversion() {
 	info=$(git svn info 2>/dev/null)
@@ -152,8 +156,20 @@ alias rundoc='godoc -http ":6060" -index -index_files $HOME/godoc_index -play'
 export TERMINAL=gnome-terminal
 
 # kubectl zsh completion
-#source <(kubectl completion zsh)
+# source <(kubectl completion zsh)
 
 # kubeadm zsh completion
 # source <(kubeadm completion zsh)
-source /usr/share/zsh/site-functions/aws_zsh_completer.sh
+
+# aws command completion
+# source /usr/share/zsh/site-functions/aws_zsh_completer.sh
+
+# minikube completion
+# source <(minikube completion zsh)
+
+# ELK DEVELOPMENT SETTINGS
+export DENV=test
+export GAMECENTER=99
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/terraform terraform
