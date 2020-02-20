@@ -1,3 +1,4 @@
+# zmodload zsh/zprof
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -64,11 +65,11 @@ ZSH_THEME="robbyrussell"
 # Add wisely, as too many plugins slow down shell startup.
 #
 plugins=(
-  git
-  docker
+  #git
+  # docker
   #kubectl
-  golang
-  #npm
+  # golang
+  # npm
   #zsh-completions
 )
 #DISABLE_MAGIC_FUNCTIONS=true
@@ -110,6 +111,7 @@ export EDITOR='vim'
 # Go stuff
 export GOPATH=$HOME/go:$HOME/git/be/go
 export GOROOT=/usr/local/go
+export GOBIN=$HOME/go/bin
 export PATH=$PATH:$HOME/go/bin:$GOROOT/bin
 # Add npm path
 export PATH=$PATH:$HOME/.npm/global/bin
@@ -125,10 +127,11 @@ alias cdbe='cd $HOME/git/be'
 alias cdco='cd $HOME/git/config'
 alias gopathbe='export GOPATH=$GOPATH:$HOME/git/be/go'
 alias cdtrunk='cd $HOME/git/be'
-alias cdfe='cd /var/www/html/fe/trunk'
+#alias cdfe='cd /var/www/html/fe/trunk'
+alias cdfe='cd /Library/WebServer/Documents/fe'
 alias cdgo='cd $HOME/git/be/go'
 alias svnversion=gitversion
-alias open='xdg-open'
+# alias open='xdg-open'
 alias aws-decode-message='aws sts decode-authorization-message --encoded-message'
 
 gitversion() {
@@ -153,23 +156,32 @@ alias rundoc='godoc -http ":6060" -index -index_files $HOME/godoc_index -play'
 # Fix for subversion error in zsh
 #source $ZSH/_subversion
 
-export TERMINAL=gnome-terminal
+#export TERMINAL=gnome-terminal
 
 # kubectl zsh completion
 # source <(kubectl completion zsh)
 
 # kubeadm zsh completion
-# source <(kubeadm completion zsh)
+#source <(kubeadm completion zsh)
 
 # aws command completion
-# source /usr/share/zsh/site-functions/aws_zsh_completer.sh
+#source /usr/share/zsh/site-functions/aws_zsh_completer.sh
+source /usr/local/bin/aws_zsh_completer.sh
 
 # minikube completion
-# source <(minikube completion zsh)
+#source <(minikube completion zsh)
 
 # ELK DEVELOPMENT SETTINGS
 export DENV=test
 export GAMECENTER=99
-
+export DI_PROXY_USER=${whoami}
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
+# zprof
+#
+# Just Java Things
+java8_home="$(/usr/libexec/java_home -v 1.8)"
+java13_home="$(/usr/libexec/java_home -v 13)"
+alias java8="export JAVA_HOME=${java8_home}"
+alias java13="export JAVA_HOME=${java13_home}"
+
