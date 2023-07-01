@@ -11,7 +11,7 @@ export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin:$HOME/bin:$HOME/.local/bin
 export PATH=$HOME/.fnm:$PATH
 eval "`fnm env`"
 
-# Teleport stuff
+# kube-ps1 config
 function get_cluster_short() {
   echo "$1" | cut -d - -f2-
 }
