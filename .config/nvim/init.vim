@@ -16,6 +16,8 @@ Plug 'VonHeikemen/lsp-zero.nvim', {'branch': 'v2.x'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
 
+Plug 'tpope/vim-fugitive', { 'tag': 'v3.7' }
+
 call plug#end()
 
 source ~/.config/nvim/lua/gauz/init.lua
