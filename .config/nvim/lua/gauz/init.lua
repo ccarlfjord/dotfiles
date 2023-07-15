@@ -4,6 +4,7 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.backspace = "2"
 vim.opt.nu = true
+vim.opt.relativenumber = true
 vim.opt.smartindent = true
 vim.opt.wrap = false
 vim.opt.updatetime = 50
