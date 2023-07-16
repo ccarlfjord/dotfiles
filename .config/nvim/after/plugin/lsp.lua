@@ -17,7 +17,11 @@ cmp.setup({
 		-- Confirm with enter
 		['<CR>'] = cmp.mapping.confirm({ select = false }),
 
-		-- Triggern completion menu
+		-- Trigger completion menu
 		['<C-Space>'] = cmp.mapping.complete(),
+
+		-- Use tab for completion
+		['<Tab>'] = cmp_action.tab_complete(),
+		['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
 	}
 })
