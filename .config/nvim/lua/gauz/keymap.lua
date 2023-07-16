@@ -2,6 +2,7 @@ vim.g.mapleader = ' '
 vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', '>', '>gv')
 vim.keymap.set('n', '<Space>', '<Nop>', {silent = true, remap = false })
+vim.keymap.set('n', '<C-Space>', '<Nop>', {silent = true, remap = false })
 vim.keymap.set('n', '<leader>fe', vim.cmd.Ex)
 vim.keymap.set("i", "<C-c>", "<Esc>")
 vim.keymap.set("n", "Q", "<nop>")
