@@ -13,4 +13,4 @@ vim.opt.incsearch = true
 vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "80"
 vim.opt.termguicolors = true
-vim.cmd.colorscheme('base16-material-darker')
+vim.cmd.colorscheme('base16-espresso')
