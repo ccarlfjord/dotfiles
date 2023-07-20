@@ -39,5 +39,3 @@ match WhitespaceEOL /\s\+$/
 " map <silent> <F3> :bp<CR>
 " map <silent> <F2> :bn<CR>
 
-" Disable mouse mode
-set mouse=""
