@@ -4,7 +4,7 @@ font:
       style: "Regular"
   size: 11
 
-# Base16 Espresso 256 - alacritty color config
+# Base16 Espresso - alacritty color config
 # Unknown. Maintained by Alex Mirrington (https://github.com/alexmirrington)
 colors:
   # Default colors
@@ -31,18 +31,12 @@ colors:
   # Bright colors
   bright:
     black:   '0x777777'
-    red:     '0xd25252'
-    green:   '0xa5c261'
-    yellow:  '0xffc66d'
-    blue:    '0x6c99bb'
-    magenta: '0xd197d9'
-    cyan:    '0xbed6ff'
+    red:     '0xf9a959'
+    green:   '0x393939'
+    yellow:  '0x515151'
+    blue:    '0xb4b7b4'
+    magenta: '0xe0e0e0'
+    cyan:    '0xf97394'
     white:   '0xffffff'
 
-  indexed_colors:
-    - { index: 16, color: '0xf9a959' }
-    - { index: 17, color: '0xf97394' }
-    - { index: 18, color: '0x393939' }
-    - { index: 19, color: '0x515151' }
-    - { index: 20, color: '0xb4b7b4' }
-    - { index: 21, color: '0xe0e0e0' }
+draw_bold_text_with_bright_colors: false

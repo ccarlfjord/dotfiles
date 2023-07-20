@@ -18,6 +18,8 @@ Plug 'nvim-telescope/telescope.nvim', { 'tag': '0.1.x' }
 Plug 'tpope/vim-fugitive', { 'tag': 'v3.7' }
 Plug 'chriskempson/base16-vim'
 Plug 'm4xshen/autoclose.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
+Plug 'nvim-telescope/telescope-file-browser.nvim'
 
 call plug#end()
 

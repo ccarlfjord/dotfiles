@@ -3,6 +3,8 @@ vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+vim.keymap.set('n', '<leader>fe', ":Telescope file_browser<CR>", {})
+
 
 local telescopeConfig = require("telescope.config")
 local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
@@ -20,7 +22,13 @@ telescope.setup({
 	},
 	pickers = {
 		find_files = {
-			find_command = {"rg", "--files", "--hidden", "--glob", "!**/.git/*"},
+			find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+		},
+	},
+	extensions = {
+		file_browser = {
+			hijack_netrw = true,
 		},
 	},
 })
+require("telescope").load_extension "file_browser"
