@@ -40,3 +40,4 @@ colors:
     white:   '0xffffff'
 
 draw_bold_text_with_bright_colors: false
+option_as_alt: OnlyLeft

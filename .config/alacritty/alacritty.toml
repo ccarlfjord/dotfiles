@@ -1,0 +1,40 @@
+[window]
+option_as_alt = "OnlyLeft"
+
+[colors]
+draw_bold_text_with_bright_colors = false
+
+[colors.bright]
+black = "0x777777"
+blue = "0xb4b7b4"
+cyan = "0xf97394"
+green = "0x393939"
+magenta = "0xe0e0e0"
+red = "0xf9a959"
+white = "0xffffff"
+yellow = "0x515151"
+
+[colors.cursor]
+cursor = "0xcccccc"
+text = "0x2d2d2d"
+
+[colors.normal]
+black = "0x2d2d2d"
+blue = "0x6c99bb"
+cyan = "0xbed6ff"
+green = "0xa5c261"
+magenta = "0xd197d9"
+red = "0xd25252"
+white = "0xcccccc"
+yellow = "0xffc66d"
+
+[colors.primary]
+background = "0x2d2d2d"
+foreground = "0xcccccc"
+
+[font]
+size = 13
+
+[font.normal]
+family = "Fira Code"
+style = "Regular"
