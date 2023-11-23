@@ -22,7 +22,8 @@ KUBE_PS1_SYMBOL_USE_IMG=true
 KUBE_PS1_SYMBOL_COLOR=cyan
 KUBE_PS1_PREFIX_COLOR=cyan
 KUBE_PS1_SUFFIX_COLOR=cyan
-PROMPT=$PROMPT'$(kube_ps1) '
+KUBE_PS1_SUFFIX=') '
+PROMPT=$PROMPT'$(kube_ps1)'
 
 # AWS CLI
 complete -C '/usr/local/bin/aws_completer' aws
