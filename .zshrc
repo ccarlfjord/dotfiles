@@ -27,3 +27,6 @@ PROMPT=$PROMPT'$(kube_ps1)'
 
 # AWS CLI
 complete -C '/usr/local/bin/aws_completer' aws
+
+alias vim='nvim'
+export EDITOR=vim
