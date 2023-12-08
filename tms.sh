@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-	local dir=$(find ~/src ~/src/tink ~/src/ccarlfjord -mindepth 1 -maxdepth 1 -type d | fzf)
+	local dir=$(find ~/src ~/src/tink ~/src/ccarlfjord -mindepth 1 -maxdepth 1 -type d 2>/dev/null | fzf)
 
 	if [[ -z $dir ]]; then
     	exit 0
