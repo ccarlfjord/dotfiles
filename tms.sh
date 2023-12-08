@@ -1,10 +1,12 @@
 #!/bin/bash
 
 main() {
-	local dir=$(find ~/src ~/src/tink ~/src/ccarlfjord -mindepth 1 -maxdepth 1 -type d 2>/dev/null | fzf)
+	local dirs=$(find ~/src ~/src/tink ~/src/ccarlfjord -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+	dirs=$(printf "$HOME\n$dirs")
+	dir=$(echo "$dirs" | fzf)
 
 	if [[ -z $dir ]]; then
-    	exit 0
+		exit 0
 	fi
 
 	name=$(basename "${dir}" | tr . _)
