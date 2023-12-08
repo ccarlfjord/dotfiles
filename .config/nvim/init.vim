@@ -15,7 +15,9 @@ Plug 'L3MON4D3/LuaSnip'     " Required
 Plug 'VonHeikemen/lsp-zero.nvim', { 'branch': 'v2.x'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
+
 Plug 'tpope/vim-fugitive', { 'tag': 'v3.7' }
+Plug 'tpope/vim-rhubarb'
 Plug 'chriskempson/base16-vim'
 Plug 'm4xshen/autoclose.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -34,6 +36,10 @@ let g:go_fmt_command = "goimports"
 " Highlight rogue whitespaces
 highlight WhitespaceEOL ctermbg=red guibg=red
 match WhitespaceEOL /\s\+$/
+
+" Highlight rogue tabs
+highlight TabEOL ctermbg=red guibg=red
+match TabEOL /\t\+$/
 
 "Buffer keymaps
 " map <silent> <F3> :bp<CR>
