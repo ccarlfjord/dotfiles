@@ -19,10 +19,10 @@ Plug 'nvim-telescope/telescope.nvim', { 'branch': '0.1.x' }
 Plug 'tpope/vim-fugitive', { 'tag': 'v3.7' }
 Plug 'tpope/vim-rhubarb'
 Plug 'chriskempson/base16-vim'
-" Plug 'm4xshen/autoclose.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-file-browser.nvim'
+Plug 'tpope/vim-sleuth', { 'tag': '*' }
 call plug#end()
 
 source ~/.config/nvim/lua/gauz/init.lua
