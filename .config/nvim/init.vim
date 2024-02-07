@@ -23,6 +23,7 @@ Plug 'windwp/nvim-autopairs'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'tpope/vim-sleuth', { 'tag': '*' }
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 call plug#end()
 
 source ~/.config/nvim/lua/gauz/init.lua

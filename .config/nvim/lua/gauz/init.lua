@@ -13,6 +13,5 @@ vim.opt.incsearch = true
 vim.opt.signcolumn = "yes"
 vim.opt.colorcolumn = "80"
 vim.opt.termguicolors = true
-vim.cmd.colorscheme('base16-espresso')
 vim.opt.mouse = 'nvi'
 vim.opt.title = true
