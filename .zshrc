@@ -1,11 +1,10 @@
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
-
-ZSH_THEME="robbyrussell"
-plugins=(git kube-ps1 kubectl aws)
-source $ZSH/oh-my-zsh.sh
-
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin:$HOME/bin:$HOME/.local/bin
+
+autoload -Uz compinit
+compinit
+
+# Starship
+eval "$(starship init zsh)"
 
 # fnm
 export PATH=$HOME/.fnm:$PATH

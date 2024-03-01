@@ -69,6 +69,8 @@ $spack\
 $memory_usage\
 $openstack\
 $azure\
+$aws\
+$gcloud\
 $direnv\
 $env_var\
 $crystal\
@@ -85,10 +87,10 @@ $container\
 $shell\
 $character"""
 
-right_format = """
-$aws\
-$gcloud\
-"""
+# right_format = """
+# $aws\
+# $gcloud\
+# """
 
 [kubernetes]
 disabled = false
@@ -107,3 +109,9 @@ show_always = true
 [gcloud]
 disabled = true
 symbol = '️🇬️ '
+
+[vagrant]
+disabled = true
+
+[docker_context]
+disabled = true
