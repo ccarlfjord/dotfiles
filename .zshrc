@@ -49,5 +49,7 @@ kind_podman() {
 
 if [[ "$linux" == true ]]; then
   source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+else
+  source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
