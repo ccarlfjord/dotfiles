@@ -25,6 +25,7 @@ set $term alacritty
 # on the original workspace that the command was run on.
 # set $menu dmenu_path | dmenu | xargs swaymsg exec --
 set $menu rofi -show drun | xargs swaymsg exec --
+set $run rofi -show run | xargs swaymsg exec --
 
 ### Output configuration
 #
@@ -73,8 +74,8 @@ exec_always pkill swayidle; exec swayidle -w \
 # or input <identifier>
 input "type:keyboard" {
     xkb_layout us,se
-    xkb_variant ,nodeadkeys
     xkb_options grp:alt_caps_toggle
+    repeat_delay 300
 }
 
 input "1189:32770:BenQ_ZOWIE_BenQ_ZOWIE_Gaming_Mouse" {
@@ -93,6 +94,7 @@ input "1189:32770:BenQ_ZOWIE_BenQ_ZOWIE_Gaming_Mouse" {
 
     # Start your launcher
     bindsym $mod+d exec $menu
+    bindsym $mod+Shift+d exec $run
 
     # Drag floating windows by holding down $mod and left mouse button.
     # Resize them with right mouse button + $mod.
@@ -244,7 +246,7 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%a %Y-%d-%m %I:%M:%S%p'; do sleep 1; done
+    status_command while ~/.config/sway/swaybar.sh; do sleep 1; done
 
     colors {
         background         $base
