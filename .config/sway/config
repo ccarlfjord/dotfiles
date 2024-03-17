@@ -110,7 +110,7 @@ input "1189:32770:BenQ_ZOWIE_BenQ_ZOWIE_Gaming_Mouse" {
     bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 
     # Lock sway
-    bindsym $mod+Alt+l exec swaylock -f -c 000000
+    bindsym $mod+Alt+l exec killall -s SIGUSR1 swayidle && killall -s SIGUSR1 swayidle
 
     # Print screen stuff
     bindsym Print exec grim
