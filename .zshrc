@@ -1,4 +1,4 @@
-export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin:$HOME/bin:$HOME/.local/bin
+export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin:$HOME/bin:$HOME/.local/bin:$HOME/.tfenv/bin
 local linux=false
 if [[ $(uname -s) == "Linux" ]]; then
   linux=true
