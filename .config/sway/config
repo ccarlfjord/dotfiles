@@ -114,8 +114,8 @@ input "1189:32770:BenQ_ZOWIE_BenQ_ZOWIE_Gaming_Mouse" {
 
     # Print screen stuff
     bindsym Print exec grim
-    bindsym Control+Print exec slurp | grim -g -
-    bindsym Control+Shift+Print exec slurp | grim -g - - | wl-copy
+    bindsym $mod+Print exec slurp | grim -g -
+    bindsym $mod+Shift+Print exec slurp | grim -g - - | wl-copy
 #
 # Moving around:
 #
