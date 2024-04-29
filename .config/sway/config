@@ -91,7 +91,6 @@ input "1189:32770:BenQ_ZOWIE_BenQ_ZOWIE_Gaming_Mouse" {
 
     # Kill focused window
     bindsym $mod+Shift+q kill
-
     # Start your launcher
     bindsym $mod+d exec $menu
     bindsym $mod+Shift+d exec $run
@@ -116,6 +115,10 @@ input "1189:32770:BenQ_ZOWIE_BenQ_ZOWIE_Gaming_Mouse" {
     bindsym Print exec grim
     bindsym $mod+Print exec slurp | grim -g -
     bindsym $mod+Shift+Print exec slurp | grim -g - - | wl-copy
+
+    # Brightness control
+    bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+    bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
 #
 # Moving around:
 #
@@ -263,3 +266,9 @@ bar {
 }
 
 include /etc/sway/config.d/*
+
+# Notification Daemon
+exec_always pkill swaync; exec swaync
+
+# Toggle control center
+bindsym $mod+Shift+n exec swaync-client -t -sw
