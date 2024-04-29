@@ -3,7 +3,7 @@
 battery_status=''
 
 if [ -e /sys/class/power_supply/BAT0/status ]; then
-	battery_status="󰁹$(cat /sys/class/power_supply/BAT0/status) "
+	battery_status="󰁹 $(cat /sys/class/power_supply/BAT0/status) "
 fi
 
 date_formatted=" $(date +'%a %H:%M:%S %d/%m/%Y') "
