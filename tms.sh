@@ -1,7 +1,7 @@
 #!/bin/bash
 
 main() {
-	local dirs=$(find ~/src ~/src/tink ~/src/ccarlfjord -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
+	local dirs=$(find ~/src ~/src/voi ~/src/ccarlfjord -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
 	dirs=$(printf "$HOME\n$dirs")
 	dir=$(echo "$dirs" | fzf)
 
