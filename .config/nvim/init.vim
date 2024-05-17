@@ -24,6 +24,9 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'nvim-telescope/telescope-file-browser.nvim'
 Plug 'tpope/vim-sleuth', { 'tag': '*' }
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'ellisonleao/glow.nvim'
+Plug 'b0o/schemastore.nvim'
+Plug 'github/copilot.vim'
 call plug#end()
 
 source ~/.config/nvim/lua/gauz/init.lua
