@@ -1,14 +1,16 @@
-profile {
-	output 'GIGA-BYTE TECHNOLOGY CO., LTD. M27Q 23250B002960' mode 2560x1440
-	output 'Dell Inc. DELL U2412M 30WJ15CP14ZL' disable
+profile default {
+	output 'GIGA-BYTE TECHNOLOGY CO., LTD. M27Q 23250B002960' mode 2560x1440@170Hz
+}
+profile laptop_m27q {
+	output 'GIGA-BYTE TECHNOLOGY CO., LTD. M27Q 23250B002960' mode 2560x1440@143.856Hz
+	output eDP-1 disable
 }
 
-profile lid-close {
+profile laptop_external_fallback {
 	output DP-3 enable
 	output eDP-1 disable
 }
 
-profile lid-open {
+profile laptop_only {
 	output eDP-1 enable
-	output * disable
 }

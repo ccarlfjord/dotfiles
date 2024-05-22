@@ -1,7 +1,7 @@
 include catppuccin-frappe
 
 # start fresh kanshi
-exec_always pkill kanshi; exec kanshi
+exec kanshi
 
 # Default config for sway
 #
@@ -50,7 +50,7 @@ output * bg #000000 solid_color
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
-exec_always pkill swayidle; exec swayidle -w \
+exec swayidle -w \
   timeout 300 'swaylock -f -c 000000' \
   timeout 600 'swaymsg "output * power off"' \
   timeout 15 'if pgrep -x swaylock; then swaymsg "output * dpms off"; fi' \
@@ -74,7 +74,7 @@ exec_always pkill swayidle; exec swayidle -w \
 # or input <identifier>
 input "type:keyboard" {
     xkb_layout us,se
-    xkb_options grp:alt_caps_toggle
+    xkb_options grp:alt_caps_toggle,caps:escape
     repeat_delay 300
 }
 
@@ -127,6 +127,12 @@ input "1189:32770:BenQ_ZOWIE_BenQ_ZOWIE_Gaming_Mouse" {
     bindsym $mod+$down focus down
     bindsym $mod+$up focus up
     bindsym $mod+$right focus right
+    bindsym $mod+Tab workspace next
+    bindsym $mod+Shift+Tab workspace prev
+    bindsym $mod+grave focus next
+    bindsym $mod+Shift+grave focus prev
+
+
     # Or use $mod+[up|down|left|right]
     bindsym $mod+Left focus left
     bindsym $mod+Down focus down
@@ -249,7 +255,8 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while ~/.config/sway/swaybar.sh; do sleep 1; done
+    # status_command while ~/.config/sway/swaybar.sh; do sleep 1; done
+    swaybar_command waybar
 
     colors {
         background         $base
@@ -268,7 +275,10 @@ bar {
 include /etc/sway/config.d/*
 
 # Notification Daemon
-exec_always pkill swaync; exec swaync
+exec swaync
 
 # Toggle control center
 bindsym $mod+Shift+n exec swaync-client -t -sw
+
+# Gnome polkit agent
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
