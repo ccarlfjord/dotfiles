@@ -27,6 +27,7 @@ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'ellisonleao/glow.nvim'
 Plug 'b0o/schemastore.nvim'
 Plug 'github/copilot.vim'
+Plug 'towolf/vim-helm'
 call plug#end()
 
 source ~/.config/nvim/lua/gauz/init.lua
