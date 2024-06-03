@@ -295,4 +295,4 @@ exec swaync
 bindsym $mod+Shift+n exec swaync-client -t -sw
 
 # Gnome polkit agent
-exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec /usr/libexec/polkit-gnome-authentication-agent-1
