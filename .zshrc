@@ -63,3 +63,14 @@ else
   source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
 
+# Load work configuration
+if [ -f $HOME/.work.zshrc ]; then
+  source $HOME/.work.zshrc
+fi
+
+# Aliases
+alias open='xdg-open'
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias -- -='cd -'
