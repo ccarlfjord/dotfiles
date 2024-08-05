@@ -133,6 +133,8 @@ input "1189:32770:BenQ_ZOWIE_BenQ_ZOWIE_Gaming_Mouse" {
     bindsym XF86AudioPause exec playerctl pause
     bindsym XF86AudioNext exec playerctl next
     bindsym XF86AudioPrev exec playerctl previous
+
+    bindsym XF86Display exec swaymsg output eDP-1 enable
 #
 # Moving around:
 #
