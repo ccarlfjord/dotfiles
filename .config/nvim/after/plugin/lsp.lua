@@ -12,8 +12,8 @@ lsp.format_on_save({
         timeout_ms = 10000,
     },
     servers = {
-        ['gopls'] = {'go'},
-        ['terraformls'] = {'terraform'},
+        ['gopls'] = { 'go' },
+        ['terraformls'] = { 'terraform' },
     }
 })
 local lspconfig = require('lspconfig')
@@ -75,6 +75,7 @@ cmp.setup({
 
         -- Trigger autocomplete
         ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.close(),
 
         -- Use tab for completion
         -- ['<Tab>'] = cmp_action.tab_complete(),

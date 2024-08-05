@@ -28,6 +28,8 @@ Plug 'ellisonleao/glow.nvim'
 Plug 'b0o/schemastore.nvim'
 Plug 'github/copilot.vim'
 Plug 'towolf/vim-helm'
+Plug 'nvim-tree/nvim-web-devicons'
+Plug 'prichrd/netrw.nvim'
 call plug#end()
 
 source ~/.config/nvim/lua/gauz/init.lua
