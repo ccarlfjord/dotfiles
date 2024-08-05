@@ -39,7 +39,7 @@ eval "$(starship init zsh)"
 # fnm
 if [ -x "$(command -v fnm)" ]; then
   export PATH=$HOME/.fnm:$PATH
-  eval "$(fnm env)"
+  eval "$(fnm env --use-on-cd)"
 fi
 
 # Load kubectl completions if command exists
@@ -74,3 +74,10 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias -- -='cd -'
+
+# load docker completions
+if [ -x "$(command -v docker))" ]; then
+  source <(docker completion zsh)
+fi
+
+export CLOUDSDK_PYTHON=$(which python)
