@@ -76,8 +76,12 @@ alias ....='cd ../../..'
 alias -- -='cd -'
 
 # load docker completions
-if [ -x "$(command -v docker))" ]; then
+if [[ -x "$(command -v docker)" ]]; then
   source <(docker completion zsh)
+fi
+
+if [[ $linux == "true" ]] && [[ -x "$(command -v gcloud)" ]]; then
+  source /usr/share/google-cloud-sdk/completion.zsh.inc
 fi
 
 export CLOUDSDK_PYTHON=$(which python)
