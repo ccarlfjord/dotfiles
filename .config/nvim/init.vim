@@ -11,6 +11,8 @@ Plug 'williamboman/mason-lspconfig.nvim'               " Optional
 Plug 'hrsh7th/nvim-cmp'     " Required
 Plug 'hrsh7th/cmp-nvim-lsp' " Required
 Plug 'L3MON4D3/LuaSnip'     " Required
+Plug 'hrsh7th/cmp-buffer'
+Plug 'saadparwaiz1/cmp_luasnip'
 
 Plug 'VonHeikemen/lsp-zero.nvim', { 'branch': 'v2.x'}
 Plug 'nvim-lua/plenary.nvim'

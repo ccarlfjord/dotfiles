@@ -1,8 +1,8 @@
 local lsp = require('lsp-zero').preset({})
 
-lsp.on_attach(function(client, bufnr)
-    lsp.default_keymaps({ buffer = bufnr })
-end)
+-- lsp.on_attach(function(client, bufnr)
+--     lsp.default_keymaps({ buffer = bufnr })
+-- end)
 
 -- don't add this function in the `on_attach` callback.
 -- `format_on_save` should run only once, before the language servers are active.
@@ -69,7 +69,16 @@ local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
 
 cmp.setup({
-    mapping = {
+    preselect = 'item',
+    completion = {
+        completeopt = 'menu,menuone,noinsert',
+    },
+    sources = {
+        { name = 'nvim_lsp' },
+        { name = 'buffer' },
+    },
+
+    mapping = cmp.mapping.preset.insert({
         -- Confirm with enter
         ['<CR>'] = cmp.mapping.confirm({ select = false }),
 
@@ -78,7 +87,7 @@ cmp.setup({
         ['<C-e>'] = cmp.mapping.close(),
 
         -- Use tab for completion
-        -- ['<Tab>'] = cmp_action.tab_complete(),
-        -- ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
-    }
+        ['<Tab>'] = cmp_action.tab_complete(),
+        ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
+    })
 })

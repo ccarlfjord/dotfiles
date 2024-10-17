@@ -1,4 +1,5 @@
 local builtin = require('telescope.builtin')
+-- vim.keymap.set('n', '<leader>fe', '<cmd>Telescope file_browser', {})
 vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
@@ -28,11 +29,11 @@ telescope.setup({
 			find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
 		},
 	},
-	-- extensions = {
-	-- 	file_browser = {
-	-- 		hijack_netrw = true,
-	-- 		hidden = true,
-	-- 	},
-	-- },
+	extensions = {
+		file_browser = {
+			hijack_netrw = false,
+			hidden = true,
+		},
+	},
 })
 require("telescope").load_extension "file_browser"
