@@ -1,12 +1,63 @@
-local lsp = require('lsp-zero').preset({})
+-- Mason
+require("mason").setup()
+require("mason-lspconfig").setup()
 
--- lsp.on_attach(function(client, bufnr)
---     lsp.default_keymaps({ buffer = bufnr })
--- end)
+
+-- set up handlers for mason-lspconfig
+require('mason-lspconfig').setup_handlers {
+    function(server_name)
+        require('lspconfig')[server_name].setup({})
+    end,
+    ["gopls"] = function()
+        local lspconfig = require('lspconfig')
+        lspconfig.gopls.setup({
+            settings = {
+                gopls = {
+                    analyses = {
+                        unusedparams = true,
+                    },
+                    staticcheck = true,
+                    gofumpt = true,
+                },
+            },
+        })
+    end,
+    ["lua_ls"] = function()
+        local lspconfig = require('lspconfig')
+        local lsp_zero = require('lsp-zero')
+        lspconfig.lua_ls.setup(
+            lsp_zero.nvim_lua_ls()
+        )
+    end,
+    ["terraformls"] = function()
+        local lspconfig = require('lspconfig')
+        lspconfig.terraformls.setup({
+            settings = {
+                timeout = '30s'
+            }
+        })
+    end,
+    ["jsonls"] = function()
+        local lspconfig = require('lspconfig')
+        lspconfig.jsonls.setup {
+            settings = {
+                json = {
+                    schemas = require('schemastore').json.schemas(),
+                    validate = { enable = true },
+                },
+            },
+        }
+    end
+}
+
+--- Reserve a space in the gutter
+-- This will avoid an annoying layout shift in the screen
+vim.opt.signcolumn = 'yes'
 
 -- don't add this function in the `on_attach` callback.
 -- `format_on_save` should run only once, before the language servers are active.
-lsp.format_on_save({
+local lsp_zero = require('lsp-zero')
+lsp_zero.format_on_save({
     format_opts = {
         async = false,
         timeout_ms = 10000,
@@ -16,55 +67,26 @@ lsp.format_on_save({
         ['terraformls'] = { 'terraform' },
     }
 })
-local lspconfig = require('lspconfig')
 
--- (Optional) Configure lua language server for neovim
-lspconfig.lua_ls.setup(lsp.nvim_lua_ls())
--- Setup gopls language server
-lspconfig.gopls.setup({
-    settings = {
-        gopls = {
-            analyses = {
-                unusedparams = true,
-            },
-            staticcheck = true,
-            gofumpt = true,
-        },
-    },
+-- Add cmp_nvim_lsp capabilities settings to lspconfig
+-- This should be executed before you configure any language server
+local lspconfig_defaults = require('lspconfig').util.default_config
+lspconfig_defaults.capabilities = vim.tbl_deep_extend(
+    'force',
+    lspconfig_defaults.capabilities,
+    require('cmp_nvim_lsp').default_capabilities()
+)
+
+-- This is where you enable features that only work
+-- if there is a language server active in the file
+vim.api.nvim_create_autocmd('LspAttach', {
+    desc = 'LSP actions',
+    callback = function(event)
+        lsp_zero.default_keymaps({ buffer = event.buf })
+    end,
 })
 
-lspconfig.terraformls.setup({
-    settings = {
-        timeout = '30s'
-    }
-})
-
-lspconfig.jsonls.setup {
-    settings = {
-        json = {
-            schemas = require('schemastore').json.schemas(),
-            validate = { enable = true },
-        },
-    },
-}
-
--- lspconfig.yamlls.setup {
---   settings = {
---     yaml = {
---       schemaStore = {
---         -- You must disable built-in schemaStore support if you want to use
---         -- this plugin and its advanced options like `ignore`.
---         enable = false,
---         -- Avoid TypeError: Cannot read properties of undefined (reading 'length')
---         url = "",
---       },
---       schemas = require('schemastore').yaml.schemas(),
---     },
---   },
--- }
-
-lsp.setup()
-
+-- nvim-cmp
 local cmp = require('cmp')
 local cmp_action = require('lsp-zero').cmp_action()
 
