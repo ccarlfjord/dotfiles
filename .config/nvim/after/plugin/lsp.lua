@@ -88,7 +88,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 -- nvim-cmp
 local cmp = require('cmp')
-local cmp_action = require('lsp-zero').cmp_action()
+-- local cmp_action = require('lsp-zero').cmp_action()
 
 cmp.setup({
     preselect = 'item',
@@ -109,7 +109,7 @@ cmp.setup({
         ['<C-e>'] = cmp.mapping.close(),
 
         -- Use tab for completion
-        ['<Tab>'] = cmp_action.tab_complete(),
-        ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
+        -- ['<Tab>'] = cmp_action.tab_complete(),
+        -- ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
     })
 })

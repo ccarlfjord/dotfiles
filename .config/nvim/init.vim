@@ -32,6 +32,7 @@ Plug 'github/copilot.vim'
 Plug 'towolf/vim-helm'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug 'prichrd/netrw.nvim'
+Plug 'mfussenegger/nvim-lint'
 call plug#end()
 
 source ~/.config/nvim/lua/gauz/init.lua
