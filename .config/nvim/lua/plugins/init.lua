@@ -30,7 +30,36 @@ return {
 		end,
 	},
 	"neovim/nvim-lspconfig",
-	"hrsh7th/nvim-cmp",
+	{
+		"hrsh7th/nvim-cmp",
+		config = function()
+			local cmp = require('cmp')
+
+			cmp.setup({
+				preselect = 'item',
+				completion = {
+					completeopt = 'menu,menuone,noinsert',
+				},
+				sources = {
+					{ name = 'nvim_lsp' },
+					{ name = 'buffer' },
+				},
+
+				mapping = cmp.mapping.preset.insert({
+					-- Confirm with enter
+					['<CR>'] = cmp.mapping.confirm({ select = false }),
+
+					-- Trigger autocomplete
+					['<C-Space>'] = cmp.mapping.complete(),
+					['<C-e>'] = cmp.mapping.close(),
+
+					-- Use tab for completion
+					-- ['<Tab>'] = cmp_action.tab_complete(),
+					-- ['<S-Tab>'] = cmp_action.select_prev_or_fallback(),
+				})
+			})
+		end,
+	},
 	"hrsh7th/cmp-nvim-lsp",
 	"L3MON4D3/LuaSnip",
 	"hrsh7th/cmp-buffer",
@@ -48,7 +77,7 @@ return {
 	"CopilotC-Nvim/CopilotChat.nvim",
 	"towolf/vim-helm",
 	"nvim-tree/nvim-web-devicons",
-	{"prichrd/netrw.nvim", opts = {}},
+	{ "prichrd/netrw.nvim", opts = {} },
 	{
 		"mfussenegger/nvim-lint",
 		config = function()
