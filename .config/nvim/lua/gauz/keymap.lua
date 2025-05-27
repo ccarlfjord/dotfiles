@@ -24,3 +24,11 @@ vim.keymap.set({ "n", "v" }, "<leader>ca", ':lua vim.lsp.buf.code_action()<CR>',
 vim.keymap.set("n", "<leader>i", ':lua vim.lsp.buf.implementations()<CR>', { remap = false, silent = true })
 vim.keymap.set("n", "<leader>j", ':lua vim.diagnostic.goto_next()<CR>')
 vim.keymap.set("n", "<leader>k", ':lua vim.diagnostic.goto_prev()<CR>')
+
+-- Don't yank on change/delete/paste
+vim.keymap.set({ "n", "v" }, "d", '"_d')
+vim.keymap.set({ "n", "v" }, "D", '"_D')
+vim.keymap.set("n", "c", '"_c')
+vim.keymap.set("n", "C", '"_C')
+vim.keymap.set({ "v" }, "p", '"_dP')
+vim.keymap.set({ "v" }, "P", '"_dp')

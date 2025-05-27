@@ -1,5 +1,3 @@
-require('gauz.keymap')
-
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.backspace = "2"
@@ -15,3 +13,8 @@ vim.opt.colorcolumn = "80"
 vim.opt.termguicolors = true
 vim.opt.mouse = 'nvi'
 vim.opt.title = true
+vim.opt.signcolumn = 'yes'
+
+require('gauz.keymap')
+require('config.lazy')
+
