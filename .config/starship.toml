@@ -112,8 +112,10 @@ ssh_only = false
 format = '[$ssh_symbol$hostname]($style) '
 
 [gcloud]
-disabled = true
+disabled = false
+format = 'on [$symbol($project)]($style) '
 symbol = '️🇬️ '
+detect_env_vars = ['GCLOUD_PROJECT']
 
 [vagrant]
 disabled = true
