@@ -2,11 +2,17 @@ return {
 	{
 		'nvim-telescope/telescope.nvim',
 		tag = '0.1.8',
-		-- or                              , branch = '0.1.x',
-		dependencies = { 'nvim-lua/plenary.nvim' },
-		config = function()
+		dependencies = { 'nvim-lua/plenary.nvim',
+			"nvim-telescope/telescope-file-browser.nvim",
+			"ANGkeith/telescope-terraform-doc.nvim",
+			{
+				'nvim-telescope/telescope-fzf-native.nvim',
+				build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release'
+			},
+		},
+
+		init = function()
 			local builtin = require('telescope.builtin')
-			-- vim.keymap.set('n', '<leader>fe', '<cmd>Telescope file_browser<CR>', {})
 			vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
 			vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 			vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
@@ -14,6 +20,9 @@ return {
 			vim.keymap.set('n', '<leader>fd', '<cmd>Telescope diagnostics<CR>', {})
 			vim.keymap.set('n', '<leader>fs', builtin.lsp_dynamic_workspace_symbols, {})
 
+			require('telescope').load_extension('file_browser')
+		end,
+		config = function()
 			local telescopeConfig = require("telescope.config")
 			local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
 			-- Find in dotfiles
@@ -44,9 +53,8 @@ return {
 					},
 				},
 			})
-			require("telescope").load_extension "file_browser"
 		end
-	}
+	},
 }
 -- local builtin = require('telescope.builtin')
 -- -- vim.keymap.set('n', '<leader>fe', '<cmd>Telescope file_browser<CR>', {})
