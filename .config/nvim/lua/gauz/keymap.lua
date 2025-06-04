@@ -31,7 +31,6 @@ vim.keymap.set({ "n", "v" }, "D", '"_D')
 vim.keymap.set("n", "c", '"_c')
 vim.keymap.set("n", "C", '"_C')
 vim.keymap.set({ "v" }, "p", '"_dP')
-vim.keymap.set({ "v" }, "P", '"_dp')
 
 -- lsp-zero keymaps
 -- https://lsp-zero.netlify.app/docs/template/opinionated.html

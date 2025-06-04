@@ -39,8 +39,8 @@ return {
 	"tpope/vim-fugitive",
 	"tpope/vim-rhubarb",
 	"chriskempson/base16-vim",
-	"windwp/nvim-autopairs",
-	{ "tpope/vim-sleuth", tag = "v2.0" },
+	{ "windwp/nvim-autopairs", event = "InsertEnter", config = true },
+	{ "tpope/vim-sleuth",      tag = "v2.0" },
 	"b0o/schemastore.nvim",
 	"github/copilot.vim",
 	"CopilotC-Nvim/CopilotChat.nvim",
@@ -54,5 +54,14 @@ return {
 				ghaction = { 'actionlint' },
 			}
 		end
+	},
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {
+			-- your configuration comes here
+			-- or leave it empty to use the default settings
+			-- refer to the configuration section below
+		}
 	},
 }
