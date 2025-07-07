@@ -15,7 +15,8 @@ setopt hist_expire_dups_first # delete duplicates first when HISTFILE size excee
 setopt hist_ignore_dups       # ignore duplicated commands history list
 setopt hist_ignore_space      # ignore commands that start with space
 setopt hist_verify            # show command with history expansion to user before running it
-setopt share_history          # share command history data
+setopt inc_append_history     # write command to history file immediately mutually exclusive with share_history
+# setopt share_history          # share command history data
 
 # Fix less
 export LESS="-R+X"
@@ -73,7 +74,7 @@ alias open='xdg-open'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias -- -='cd -'
+alias -- -= 'cd -'
 
 # load docker completions
 if [[ -x "$(command -v docker)" ]]; then
@@ -85,3 +86,12 @@ if [[ $linux == "true" ]] && [[ -x "$(command -v gcloud)" ]]; then
 fi
 
 export CLOUDSDK_PYTHON=$(which python)
+
+alias k=kubectl
+
+# bun completions
+[ -s "/home/charles/.bun/_bun" ] && source "/home/charles/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

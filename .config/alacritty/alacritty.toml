@@ -6,6 +6,7 @@ import = [
 
 [window]
 # option_as_alt = "OnlyLeft" # macOS only
+decorations = "None"
 
 [font]
 size = 11

@@ -43,8 +43,6 @@ return {
 	{ "tpope/vim-sleuth",      tag = "v2.0" },
 	"b0o/schemastore.nvim",
 	"github/copilot.vim",
-	"CopilotC-Nvim/CopilotChat.nvim",
-	"towolf/vim-helm",
 	"nvim-tree/nvim-web-devicons",
 	"prichrd/netrw.nvim",
 	{
@@ -64,4 +62,8 @@ return {
 			-- refer to the configuration section below
 		}
 	},
+	{
+		"qvalentin/helm-ls.nvim",
+		ft = "helm",
+	}
 }
