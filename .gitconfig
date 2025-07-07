@@ -1,0 +1,41 @@
+[alias]
+	st = status
+	co = checkout
+	br = branch
+	ci = commit
+	sw = switch
+[commit]
+	verbose = true
+	gpgsign = true
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+[gpg]
+	format = ssh
+[init]
+	defaultBranch = main
+# [column]
+# 	ui = auto
+[branch]
+	sort = -committerdate
+[diff]
+	algorithm = histogram
+	colorMoved = plain
+	mnemonicPrefix = true
+	renames = true
+[push]
+	default = simple
+	autosetupRemote = true
+[fetch]
+	prune = true
+	pruneTags = true
+	all = true
+[pull]
+	rebase = true
+[merge]
+	conflictstyle = diff3
+[pager]
+	branch = 
+[rebase]
+	autostash = true
+	autosquash = true
