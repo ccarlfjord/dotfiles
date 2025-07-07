@@ -52,7 +52,7 @@ fi
 complete -C '/usr/local/bin/aws_completer' aws
 
 alias vim='nvim'
-export EDITOR=vim
+export EDITOR='nvim'
 
 kind_podman() {
   export KIND_EXPERIMENTAL_PROVIDER=podman
