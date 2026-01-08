@@ -12,6 +12,7 @@ return {
 					completeopt = 'menu,menuone,noinsert',
 				},
 				sources = {
+					{ name = 'copilot' },
 					{ name = 'nvim_lsp' },
 					{ name = 'buffer' },
 				},
@@ -42,7 +43,6 @@ return {
 	{ "windwp/nvim-autopairs", event = "InsertEnter", config = true },
 	{ "tpope/vim-sleuth",      tag = "v2.0" },
 	"b0o/schemastore.nvim",
-	"github/copilot.vim",
 	"nvim-tree/nvim-web-devicons",
 	"prichrd/netrw.nvim",
 	{
@@ -65,5 +65,34 @@ return {
 	{
 		"qvalentin/helm-ls.nvim",
 		ft = "helm",
-	}
+	},
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "BufReadPost",
+		opts = {
+			suggestion = {
+				-- enabled = not vim.g.ai_cmp,
+				enabled = false,
+				auto_trigger = true,
+				hide_during_completion = vim.g.ai_cmp,
+				keymap = {
+					accept = false, -- handled by nvim-cmp / blink.cmp
+					next = "<M-]>",
+					prev = "<M-[>",
+				},
+			},
+			panel = { enabled = false },
+			filetypes = {
+				markdown = true,
+				help = true,
+			},
+		},
+	},
+	{
+		"zbirenbaum/copilot-cmp",
+		config = function()
+			require("copilot_cmp").setup()
+		end
+	},
 }
