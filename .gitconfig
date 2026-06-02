@@ -39,3 +39,7 @@
 [rebase]
 	autostash = true
 	autosquash = true
+[user]
+	email = "charles.carlfjord@voiapp.io"
+	name = "Charles Carlfjord"
+	signingkey = "~/.ssh/id_ed25519.pub"
