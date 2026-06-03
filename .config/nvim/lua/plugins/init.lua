@@ -68,6 +68,7 @@ return {
 	},
 	{
 		"zbirenbaum/copilot.lua",
+		enabled = false,
 		cmd = "Copilot",
 		event = "BufReadPost",
 		opts = {
@@ -88,6 +89,8 @@ return {
 				help = true,
 			},
 		},
+		-- copilot_model = "claude-sonnet-4-5"
+		-- copilot_model = "claude-opus-4-5"
 	},
 	{
 		"zbirenbaum/copilot-cmp",
