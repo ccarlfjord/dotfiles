@@ -68,7 +68,6 @@ return {
 	},
 	{
 		"zbirenbaum/copilot.lua",
-		enabled = false,
 		cmd = "Copilot",
 		event = "BufReadPost",
 		opts = {
@@ -96,6 +95,15 @@ return {
 		"zbirenbaum/copilot-cmp",
 		config = function()
 			require("copilot_cmp").setup()
+			-- copilot-cmp calls client.is_stopped() with a dot, deprecated in
+			-- 0.12; also fixes its inverted name check (not x == "y")
+			local source = require('copilot_cmp.source')
+			source.is_available = function(self)
+				if self.client:is_stopped() or self.client.name ~= 'copilot' then
+					return false
+				end
+				return next(vim.lsp.get_clients({ bufnr = 0, id = self.client.id })) ~= nil
+			end
 		end
 	},
 }

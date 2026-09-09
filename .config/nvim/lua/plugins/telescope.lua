@@ -1,6 +1,3 @@
-local setupTelescope = function()
-
-end
 return {
 	{
 		'nvim-telescope/telescope.nvim',
