@@ -1,35 +1,31 @@
 return {
 	{
 		"nvim-treesitter/nvim-treesitter",
-		branch = "master",
+		branch = "main",
 		lazy = false,
 		build = ":TSUpdate",
 		config = function()
-			require 'nvim-treesitter.configs'.setup {
-				-- A list of parser names, or "all" (the five listed
-				-- parsers should always be installed)
-				ensure_installed = { "c", "lua", "vim", "vimdoc",
-					"query", "go", "rust" },
+			local parsers = { "c", "lua", "vim", "vimdoc", "query", "go", "rust" }
+			local ts = require('nvim-treesitter')
 
-				-- Install parsers synchronously (only applied to
-				-- `ensure_installed`)
-				sync_install = false,
+			-- main-branch rewrite: the plugin only manages parsers/queries;
+			-- highlighting is core Nvim and must be started per-buffer.
+			ts.install(parsers)
 
-				-- Automatically install missing parsers when entering
-				-- buffer Recommendation: set to false if you don't
-				-- have `tree-sitter` CLI installed locally
-				auto_install = true,
-
-				-- List of parsers to ignore installing (for "all")
-				ignore_install = {},
-
-				---- If you need to change the installation directory
-				---of the parsers (see -> Advanced Setup)
-				-- parser_install_dir = "/some/path/to/store/parsers",
-				-- -- Remember to run
-				-- vim.opt.runtimepath:append("/some/path/to/store/parsers")!
-
-				highlight = { enable = true, }, }
+			vim.api.nvim_create_autocmd('FileType', {
+				callback = function(args)
+					local lang = vim.treesitter.language.get_lang(args.match)
+					-- only handle languages the plugin actually supports
+					if not lang or not vim.list_contains(ts.get_available(), lang) then
+						return
+					end
+					-- start fails if the parser is missing/not ready yet
+					-- (install() is async); install is a no-op once present
+					if not pcall(vim.treesitter.start, args.buf) then
+						ts.install({ lang })
+					end
+				end,
+			})
 		end,
 	},
 }

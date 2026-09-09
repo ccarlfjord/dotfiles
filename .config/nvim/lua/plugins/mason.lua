@@ -7,16 +7,14 @@ return {
         "mason-org/mason-lspconfig.nvim",
         dependencies = {
             "mason-org/mason.nvim",
-            "williamboman/mason-lspconfig.nvim",
         },
         opts = {
             ensure_installed = {
                 "gopls",
                 "lua_ls",
-                "terraformls",
                 "jsonls",
             },
-            automatic_enabled = true,
+            automatic_enable = true,
         },
     },
 
