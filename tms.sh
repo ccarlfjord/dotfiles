@@ -1,31 +1,53 @@
 #!/bin/bash
 
+# Worktree convention: <repo>/.worktrees/<name>/ (gitignored globally).
 main() {
-	local dirs=$(find ~/src ~/src/voi ~/src/ccarlfjord -mindepth 1 -maxdepth 1 -type d 2>/dev/null)
-	dirs=$(printf "$HOME\n$dirs")
-	dir=$(echo "$dirs" | fzf)
+	local -a dirs=("$HOME") roots=("$HOME"/src/* "$HOME"/src/*/*)
+	local dir
+	for dir in "${roots[@]}"; do
+		[[ -d $dir && -e $dir/.git ]] || continue
+		dirs+=("$dir")
+		for wt in "$dir"/.worktrees/*; do
+			[[ -d $wt ]] && dirs+=("$wt")
+		done
+	done
 
-	if [[ -z $dir ]]; then
-		exit 0
+	local pick d
+	# Display form is also the name-derivation input below: change one, change both.
+	# ~/src/... keeps the picker compact.
+	local -a entries=()
+	for d in "${dirs[@]}"; do
+		entries+=("${d/"$HOME"/\~}")
+	done
+	pick=$(printf '%s\n' "${entries[@]}" | fzf --query="${1:-}") || exit 0
+	local dir
+	case $pick in
+	"~") dir=$HOME ;;
+	*) dir="$HOME/${pick#\~/}" ;;
+	esac
+	# ~/ -> home; ~/src/<repo>[/[.worktrees/]wt] -> repo[_wt]
+	local name=$pick
+	case $pick in
+	"~") name=home ;;
+	*) name=${pick#\~/src/} ;;
+	esac
+	name=${name//.worktrees\//}   # drop the convention dir
+	name=${name//[^a-zA-Z0-9_-]/_} # tmux-safe: letters, digits, _, -
+
+	# A tmux server on a different socket (-L) must not count as "running":
+	# only check the default server.
+	if [[ -z $TMUX ]] && ! tmux ls >/dev/null 2>&1; then
+		exec tmux new -s "$name" -c "$dir"
 	fi
 
-	name=$(basename "${dir}" | tr . _)
-	running=$(pgrep tmux)
-	if [[ -z $TMUX ]] && [[ -z $running ]]; then
-		tmux new -s "$name" -c "$dir"
-		exit 0
-	fi
-
-	if ! tmux ls -F#S | grep -q -x "$name"; then
+	if ! tmux ls -F '#S' 2>/dev/null | grep -qx -- "$name"; then
 		tmux new -ds "$name" -c "$dir"
 	fi
 
 	if [[ -z $TMUX ]]; then
-		tmux attach -t "$name"
-		exit 0
+		exec tmux attach -t "$name"
 	fi
-
 	tmux switchc -t "$name"
 }
 
-main
+main "$@"
