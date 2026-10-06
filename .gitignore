@@ -1,0 +1,8 @@
+# Never version pi secrets or sessions, even if they end up here by accident
+pi/.pi/agent/auth.json
+pi/.pi/agent/mcp-auth.json
+pi/.pi/agent/sessions/
+pi/.pi/agent/env
+node_modules/
+# stray unix socket at repo root
+dotfiles
