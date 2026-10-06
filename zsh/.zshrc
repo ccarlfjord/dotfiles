@@ -1,7 +1,8 @@
 export PATH=$PATH:/usr/local/go/bin:$HOME/go/bin:$HOME/bin:$HOME/.local/bin:$HOME/.tfenv/bin
-local linux=false
-if [[ $(uname -s) == "Linux" ]]; then
+if [[ $OSTYPE == linux* ]]; then
   linux=true
+else
+  linux=false
 fi
 
 # Set history file
@@ -43,13 +44,22 @@ if [ -x "$(command -v fnm)" ]; then
   eval "$(fnm env --use-on-cd)"
 fi
 
-# Load kubectl completions if command exists
-if [ -x "$(command -v kubectl)" ]; then
-  source <(kubectl completion zsh)
+# kubectl completion: spawning kubectl can trigger the gke exec auth plugin
+# (multi-second token mint when network is slow), so cache the static output
+# and regenerate only when the binary is newer than the cache
+if (( $+commands[kubectl] )); then
+  _kc_cache="$HOME/.cache/zsh/kubectl-completion.zsh"
+  _kc_bin="${commands[kubectl]}"
+  if [[ ! -s "$_kc_cache" || "$_kc_cache" -ot "$_kc_bin" ]]; then
+    mkdir -p "$_kc_cache:h"
+    ( kubectl completion zsh >| "$_kc_cache.new" && mv "$_kc_cache.new" "$_kc_cache" ) &!
+  fi
+  [[ -s "$_kc_cache" ]] && source "$_kc_cache"
+  unset _kc_cache _kc_bin
 fi
 
 # AWS CLI
-complete -C '/usr/local/bin/aws_completer' aws
+# complete -C '/usr/local/bin/aws_completer' aws
 
 alias vim='nvim'
 export EDITOR='nvim'
@@ -76,6 +86,9 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias -- -= 'cd -'
 
+# omp bails out of ~ by default; interactive shells usually start here
+alias omp='omp --allow-home'
+
 # load docker completions
 if [[ -x "$(command -v docker)" ]]; then
   source <(docker completion zsh)
@@ -85,7 +98,6 @@ if [[ $linux == "true" ]] && [[ -x "$(command -v gcloud)" ]]; then
   source /usr/share/google-cloud-sdk/completion.zsh.inc
 fi
 
-export CLOUDSDK_PYTHON=$(which python)
 
 alias k=kubectl
 
@@ -96,9 +108,9 @@ alias k=kubectl
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-# fnm
-FNM_PATH="/home/charles/.local/share/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="$FNM_PATH:$PATH"
-  eval "`fnm env`"
-fi
+# gcloud: allow its bundled python to see user site-packages (numpy for IAP tunnels)
+export CLOUDSDK_PYTHON_SITEPACKAGES=1
+export CLOUDSDK_PYTHON=$(which python)
+
+# pi MCP tokens (secrets live in ~/.pi/env, not in the dotfiles repo)
+[ -f ~/.pi/env ] && source ~/.pi/env

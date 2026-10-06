@@ -1,0 +1,11 @@
+# Files at the repo root that are NOT stow packages / must not be symlinked into ~:
+# applied with `dconf load`, not a symlink
+dconf\.ini
+# helper script, referenced manually
+tms\.sh
+# stray unix socket, not dotfiles
+dotfiles
+# repo metadata
+\.gitignore
+\.stow-local-ignore
+README\.md

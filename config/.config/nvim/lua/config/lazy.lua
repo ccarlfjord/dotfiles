@@ -33,3 +33,22 @@ require("lazy").setup({
   -- automatically check for plugin updates
   checker = { enabled = true, notify = false },
 })
+
+-- Auto-update plugins at most once per day
+local update_stamp = vim.fn.stdpath("state") .. "/lazy-auto-update"
+local needs_update = true
+local f = io.open(update_stamp, "r")
+if f then
+  local last = tonumber(f:read("*a")) or 0
+  f:close()
+  needs_update = os.time() - last > 24 * 60 * 60
+end
+if needs_update then
+  io.open(update_stamp, "w"):write(tostring(os.time()))
+  vim.api.nvim_create_autocmd("VimEnter", {
+    once = true,
+    callback = function()
+      require("lazy").update({ show = false, wait = false })
+    end,
+  })
+end
