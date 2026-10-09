@@ -1,0 +1,7 @@
+{
+  "lastChangelogVersion": "1.0.4",
+  "defaultProvider": "baseten",
+  "defaultModel": "zai-org/GLM-5.3-Flash",
+  "hideThinkingBlock": true,
+  "theme": "catppuccin-latte/catppuccin-frappe"
+}
