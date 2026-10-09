@@ -6,3 +6,6 @@ pi/.pi/agent/env
 node_modules/
 # stray unix socket at repo root
 dotfiles
+
+# pi auto-refreshes this catalog; live copy stays in ~/.pi, never in git
+pi/.pi/agent/models-store.json
