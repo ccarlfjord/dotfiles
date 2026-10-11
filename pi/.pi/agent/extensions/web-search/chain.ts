@@ -4,6 +4,7 @@
  */
 import type { ChainFailure, SearchParams, SearchProviderId, SearchResponse } from "./types";
 import { SearchProviderError } from "./types";
+import { loadCredentials } from "./pass";
 import { DuckDuckGoProvider } from "./providers/duckduckgo";
 import { ExaProvider } from "./providers/exa";
 import { GoogleProvider } from "./providers/google";
@@ -80,6 +81,10 @@ export interface ChainResult {
  * Every failure is collected so callers can explain a total outage.
  */
 export async function runSearchChain(params: SearchParams): Promise<ChainResult> {
+	// Credentials may live in `pass` rather than the inherited environment;
+	// load lazily so `pass show` only runs when a search actually needs them.
+	await loadCredentials();
+
 	const { chain, invalid } = resolveChain();
 	const failures: ChainFailure[] = [];
 

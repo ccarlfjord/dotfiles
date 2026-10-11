@@ -20,6 +20,19 @@ failures are collected and surfaced. Set `WEB_SEARCH_CHAIN` (comma-separated
 ids, e.g. `WEB_SEARCH_CHAIN=searxng,tavily`) to reorder/limit — note
 `searxng` is not ported yet; add it in `providers/` if needed.
 
+## Credentials
+
+Provider keys come from the environment, but nothing has to source them:
+on the first search the tool looks up each still-missing key in `pass` (the
+unix password manager) as `pi/web-search/<KEY>` and fills it in — lazily,
+once per session (`pass.ts`). Real environment variables take precedence.
+Missing entries are not errors; that provider just reports "not configured"
+and the chain moves on.
+
+```sh
+pass insert pi/web-search/EXA_API_KEY   # one entry per key
+```
+
 ## Parameters
 
 - `query` (string, required) — supports `site:`, `-site:`, `"phrases"`,
