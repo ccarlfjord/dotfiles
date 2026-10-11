@@ -21,6 +21,7 @@ const PASS_PREFIX = "pi/web-search";
 
 /** Provider credentials that may live in pass (WEB_SEARCH_CHAIN is config, stays env-only). */
 const CREDENTIAL_KEYS = [
+	"BRAVE_API_KEY",
 	"EXA_API_KEY",
 	"GOOGLE_API_KEY",
 	"GOOGLE_CSE_ID",

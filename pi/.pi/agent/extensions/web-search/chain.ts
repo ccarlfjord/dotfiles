@@ -5,6 +5,7 @@
 import type { ChainFailure, SearchParams, SearchProviderId, SearchResponse } from "./types";
 import { SearchProviderError } from "./types";
 import { loadCredentials } from "./pass";
+import { BraveProvider } from "./providers/brave";
 import { DuckDuckGoProvider } from "./providers/duckduckgo";
 import { ExaProvider } from "./providers/exa";
 import { GoogleProvider } from "./providers/google";
@@ -12,10 +13,11 @@ import { JinaProvider } from "./providers/jina";
 import { TavilyProvider } from "./providers/tavily";
 import type { SearchProvider } from "./providers/base";
 
-/** Default chain order: free engine first, credentialed providers as fallback. */
-const DEFAULT_CHAIN: readonly SearchProviderId[] = ["duckduckgo", "tavily", "exa", "jina", "google"];
+/** Default chain order: Brave (preferred), then the free engine, then credentialed fallbacks. */
+const DEFAULT_CHAIN: readonly SearchProviderId[] = ["brave", "duckduckgo", "tavily", "exa", "jina", "google"];
 
 const FACTORIES: Record<SearchProviderId, () => SearchProvider> = {
+	brave: () => new BraveProvider(),
 	duckduckgo: () => new DuckDuckGoProvider(),
 	tavily: () => new TavilyProvider(),
 	exa: () => new ExaProvider(),

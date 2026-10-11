@@ -5,7 +5,7 @@
  * trimmed to what a standalone extension needs.
  */
 
-export type SearchProviderId = "duckduckgo" | "tavily" | "exa" | "jina" | "google";
+export type SearchProviderId = "brave" | "duckduckgo" | "tavily" | "exa" | "jina" | "google";
 
 export type Recency = "day" | "week" | "month" | "year";
 
