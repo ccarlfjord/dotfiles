@@ -41,5 +41,5 @@
 	autosquash = true
 [user]
 	name = "Charles Carlfjord"
-	email = "charles@gauz.se"
-	signingKey = "/home/gauz/.ssh/id_ed25519.pub"
+	email = "charles.carlfjord@voiapp.io"
+	signingkey = /home/charles/.ssh/id_ed25519.pub
