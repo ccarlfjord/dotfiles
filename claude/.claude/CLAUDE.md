@@ -68,6 +68,10 @@ NEVER commit. NEVER push. These are prohibited outright, not approval-gated: no 
 - Leave changes uncommitted in the working tree for the user to review and commit themselves.
 - Ask-first gate: the only permitted trigger for any commit/push/PR action is the user's explicit instruction in the current conversation ("push this", "open a PR"). Silence, task context ("ship it"), prior approvals in other sessions, or CI conventions do NOT count. If the user has approved the change but not the publishing action, finish with a summary of the diff and stop.
 
+## Commit messages
+
+Applies whenever a commit message is written, drafted, or reviewed, including when the user supplies their own for feedback. The subject states the change. When it is self-explanatory, that is the whole message: implementation detail is readable from the diff, so do not restate it. Add a body only for what the diff cannot show, meaning the why, a constraint, a security decision, or a migration/deployment caveat. Keep the whole message to the subject plus at most three or four lines.
+
 ## Never run destructive commands
 
 NEVER run `terraform apply` (or any other destructive/state-changing command: `terraform destroy`, `kubectl delete`, DB migrations with side effects, etc.). Applies are run from CI or by the user, never by the agent. Plan freely; mutating actions wait for the user.
