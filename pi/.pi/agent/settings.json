@@ -1,8 +1,10 @@
 {
   "lastChangelogVersion": "1.2.0",
+  "$schema": "https://pi.dev/schemas/settings.schema.json",
   "defaultProvider": "openrouter",
   "defaultModel": "deepseek/deepseek-v4.1-flash",
   "hideThinkingBlock": true,
+  "theme": "catppuccin-latte/catppuccin-frappe",
   "enabledModels": [
     "openrouter/~deepseek/deepseek-flash-latest",
     "openrouter/~z-ai/glm-flash-latest",
