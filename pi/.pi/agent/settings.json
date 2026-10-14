@@ -1,16 +1,14 @@
 {
-  "lastChangelogVersion": "1.1.0",
+  "lastChangelogVersion": "1.2.0",
   "defaultProvider": "openrouter",
-  "defaultModel": "z-ai/glm-5.3-flash",
+  "defaultModel": "deepseek/deepseek-v4.1-flash",
   "hideThinkingBlock": true,
   "enabledModels": [
     "openrouter/~deepseek/deepseek-flash-latest",
     "openrouter/~z-ai/glm-flash-latest",
     "openrouter/~google/gemini-flash-latest",
     "openrouter/z-ai/glm-5.3-flash",
-    "openrouter/z-ai/glm-5.3",
     "openrouter/deepseek/deepseek-v4.1-flash",
-    "openrouter/deepseek/deepseek-v4-pro-0813",
     "openrouter/google/gemini-3.8-flash"
   ]
 }
