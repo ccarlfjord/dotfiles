@@ -28,8 +28,18 @@ import { join } from "node:path";
 
 const SEP = " │ ";
 
-/** Blank lines rendered below the status bar (breathing room above the tmux bar). */
+/** Blank lines rendered above the status bar (breathing room below the chat window). */
+const TOP_PAD_LINES = 0;
+
+/** Lines rendered below the status bar (breathing room above the tmux bar). */
 const BOTTOM_PAD_LINES = 1;
+
+/**
+ * Glyph used to fill bottom pad lines. A blank "" renders a full empty row
+ * (a chunky gap); a dim rule glyph (like the editor border's "─") fills the
+ * row as a hairline separator instead. Set to "" to restore a blank row.
+ */
+const BOTTOM_PAD_GLYPH = "─";
 
 /**
  * Detect whether `cwd` is inside a *linked* git worktree (not the main worktree).
@@ -188,7 +198,14 @@ export default function (pi: ExtensionAPI) {
 				invalidate() {},
 				render(width: number): string[] {
 					const lines = buildFooter(ctx, theme, footerData, width);
-					return [...lines, ...Array(BOTTOM_PAD_LINES).fill("")];
+					const bottomPad = Array(BOTTOM_PAD_LINES)
+						.fill(0)
+						.map(() => (BOTTOM_PAD_GLYPH ? theme.fg("dim", BOTTOM_PAD_GLYPH.repeat(width)) : ""));
+					return [
+						...Array(TOP_PAD_LINES).fill(""),
+						...lines,
+						...bottomPad,
+					];
 				},
 			};
 		});
