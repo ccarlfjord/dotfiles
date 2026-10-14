@@ -9,7 +9,7 @@ cd "$(dirname "$0")"
 # Pre-create it so stow descends into it instead of folding ~/.pi into a symlink.
 mkdir -p "$HOME/.pi/agent"
 
-packages=(zsh tmux vim dev config pi claude)
+packages=(zsh tmux vim dev config pi claude agents)
 
 for pkg in "${packages[@]}"; do
   echo "stow $pkg"
