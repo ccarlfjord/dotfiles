@@ -1,18 +1,13 @@
 {
-  "$schema": "https://pi.dev/schemas/settings.schema.json",
-  "lastChangelogVersion": "1.1.0",
-  "defaultProvider": "openrouter",
-  "defaultModel": "z-ai/glm-5.3-flash",
+  "lastChangelogVersion": "1.2.0",
+  "defaultProvider": "baseten",
+  "defaultModel": "zai-org/GLM-5.3-Flash",
   "hideThinkingBlock": true,
+  "markdown": {
+    "codeBlockIndent": ""
+  },
   "theme": "catppuccin-latte/catppuccin-frappe",
-  "enabledModels": [
-    "openrouter/~deepseek/deepseek-flash-latest",
-    "openrouter/~z-ai/glm-flash-latest",
-    "openrouter/~google/gemini-flash-latest",
-    "openrouter/z-ai/glm-5.3-flash",
-    "openrouter/z-ai/glm-5.3",
-    "openrouter/deepseek/deepseek-v4.1-flash",
-    "openrouter/deepseek/deepseek-v4-pro-0813",
-    "openrouter/google/gemini-3.8-flash"
+  "extensions": [
+    "extensions/pretty-footer.ts"
   ]
 }
