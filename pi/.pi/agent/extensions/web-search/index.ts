@@ -2,8 +2,8 @@
  * web_search extension for upstream pi.
  *
  * A port of oh-my-pi's web-search stack: one `web_search` tool over an
- * ordered provider chain (DuckDuckGo by default, Tavily/Exa/Jina as
- * credentialed fallbacks). See ./README.md.
+ * ordered provider chain (Exa first, Brave and free engines as fallback).
+ * See ./README.md.
  */
 import { Type } from "@earendil-works/pi-ai";
 import { defineTool, type ExtensionAPI } from "@earendil-works/pi-coding-agent";

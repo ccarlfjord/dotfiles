@@ -7,18 +7,23 @@ everything else is standalone and unit-testable.
 
 ## Providers
 
-| id | Key | Default? | Notes |
+| id | Key | Order | Notes |
 | --- | --- | --- | --- |
-| `duckduckgo` | none | yes (first) | HTML frontend, browser-fingerprint headers; DDG throttles datacenter IPs → anomaly page handled as a clean error |
-| `tavily` | `TAVILY_API_KEY` | fallback | agent-shaped results + synthesized answer |
-| `exa` | `EXA_API_KEY` | fallback | neural search, summaries synthesized into `answer` |
-| `jina` | `JINA_API_KEY` | fallback | reader-style cleaned results |
-| `google` | `GOOGLE_API_KEY` + `GOOGLE_CSE_ID` | fallback | official Custom Search JSON API (100 free/day); scraping google.com needs a headless browser, which is not ported |
+| `exa` | `EXA_API_KEY` | 1 | neural search; `recency` → `startPublishedDate`; `site:`/`-site:` → `includeDomains`/`excludeDomains`; other operator syntax is treated as prose |
+| `brave` | `BRAVE_API_KEY` | 2 | official Search API; `recency` → `freshness` |
+| `duckduckgo` | none | 3 | HTML frontend, browser-fingerprint headers; DDG throttles datacenter IPs → anomaly page handled as a clean error |
+| `tavily` | `TAVILY_API_KEY` | 4 | agent-shaped results + synthesized answer |
+| `jina` | `JINA_API_KEY` | 5 | reader-style cleaned results; ignores `recency` |
+| `google` | `GOOGLE_API_KEY` + `GOOGLE_CSE_ID` | 6 | official Custom Search JSON API (100 free/day); scraping google.com needs a headless browser, which is not ported |
 
 The chain tries providers in order and returns the **first success**;
-failures are collected and surfaced. Set `WEB_SEARCH_CHAIN` (comma-separated
-ids, e.g. `WEB_SEARCH_CHAIN=searxng,tavily`) to reorder/limit — note
-`searxng` is not ported yet; add it in `providers/` if needed.
+failures are collected and surfaced. Providers that declare
+`parsesOperators = false` are demoted below the keyword engines when the
+query uses `intitle:`/`inurl:`/`intext:`/`filetype:`/quoted/`OR` syntax
+(`site:` is not in that list: Exa handles it structurally). Set
+`WEB_SEARCH_CHAIN` (comma-separated ids, e.g. `WEB_SEARCH_CHAIN=brave,tavily`)
+to reorder/limit — note `searxng` is not ported yet; add it in `providers/`
+if needed.
 
 ## Credentials
 
@@ -37,9 +42,15 @@ pass insert pi/web-search/EXA_API_KEY   # one entry per key
 
 - `query` (string, required) — supports `site:`, `-site:`, `"phrases"`,
   `-term`, `OR`, `intitle:`, `inurl:`, `filetype:`
-- `recency` — `day | week | month | year` (DDG → `df`; Tavily → `time_range`;
-  Exa/Jina ignore it)
+- `recency` — `day | week | month | year` (DDG → `df`; Brave → `freshness`;
+  Tavily → `time_range`; Exa → `startPublishedDate`, which also drops
+  undated pages; Jina ignores it)
 - `limit` — result count (defaults 10 DDG/Exa, 5 Tavily/Jina; max 20)
+
+Exa specifics follow its agent skill: `snippet` is the highest-scoring
+`highlights` entry (`highlightScores`) rather than the first one, and
+`ageSeconds` is derived from `publishedDate`. Search `type` stays `auto`;
+the skill's `deep`/`fast` modes are not exposed through this tool.
 
 ## Install
 

@@ -92,6 +92,7 @@ export async function searchGoogle(params: SearchParams & { apiKey: string; cx: 
 export class GoogleProvider implements SearchProvider {
 	readonly id = "google" as const;
 	readonly label = "Google";
+	readonly parsesOperators = true;
 
 	isAvailable(): boolean {
 		return Boolean(process.env.GOOGLE_API_KEY && process.env.GOOGLE_CSE_ID);

@@ -94,6 +94,7 @@ export async function searchTavily(params: SearchParams & { apiKey: string }): P
 export class TavilyProvider implements SearchProvider {
 	readonly id = "tavily" as const;
 	readonly label = "Tavily";
+	readonly parsesOperators = true;
 
 	isAvailable(): boolean {
 		return Boolean(process.env.TAVILY_API_KEY);
