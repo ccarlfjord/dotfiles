@@ -52,6 +52,10 @@ Exa specifics follow its agent skill: `snippet` is the highest-scoring
 `ageSeconds` is derived from `publishedDate`. Search `type` stays `auto`;
 the skill's `deep`/`fast` modes are not exposed through this tool.
 
+Every result ends with a `(via <provider>)` footer, so the serving engine is
+visible without checking the session log. Fallback attempts that failed for a
+real reason are appended to the same line.
+
 ## Install
 
 Nothing to install: it lives in the user extensions dir

@@ -71,8 +71,10 @@ const webSearchTool = defineTool({
 			);
 		}
 
+		const notes = [`via ${response.provider}`];
 		const chainSummary = summarizeChain(failures);
-		const text = chainSummary ? `${formatForLLM(response)}\n\n(${chainSummary})` : formatForLLM(response);
+		if (chainSummary) notes.push(chainSummary);
+		const text = `${formatForLLM(response)}\n\n(${notes.join("; ")})`;
 
 		return {
 			content: [{ type: "text", text }],
