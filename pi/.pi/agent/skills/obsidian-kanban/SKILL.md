@@ -1,16 +1,20 @@
 ---
 name: obsidian-kanban
-description: Read and edit Obsidian Kanban boards (the kanban-plugin markdown format) through the obsidian CLI. Use when asked to add, move, rename, complete, or remove cards on a kanban board, list a board's lanes and cards, or find which boards exist; covers Board.md-style files in the Windows vault reached over the CLI.
+description: Read and edit Obsidian Kanban boards (the kanban-plugin markdown format) through the obsidian CLI, or directly on native Linux. Use when asked to add, move, rename, complete, or remove cards on a kanban board, list a board's lanes and cards, or find which boards exist.
 ---
 
 # Obsidian Kanban boards
 
-Boards are ordinary markdown files the Kanban plugin renders. The obsidian CLI
-has no card or lane commands, so combine its native read/task commands with
-`obsidian eval` running `board.js` (in this skill dir) against Obsidian's vault API.
+Boards are ordinary markdown files the Kanban plugin renders. On WSL, Obsidian
+runs on Windows and the CLI has no card or lane commands, so combine its native
+read/task commands with `obsidian eval` running `board.js` (in this skill dir)
+against Obsidian's vault API. On native Linux, `~/src/ccarlfjord/obsidian` is the
+real vault: use the CLI when it is available, or edit the board markdown
+directly.
 
-Obsidian must be running, and all edits go through the CLI. Never edit the WSL
-clone (`~/src/ccarlfjord/obsidian`) directly; it is pull-only and would drift.
+On WSL, all edits go through the CLI and Obsidian must be running. Never edit the
+WSL clone (`~/src/ccarlfjord/obsidian`) there; it is pull-only and would drift.
+General vault rules live in the `obsidian` skill.
 
 ## Board format
 
@@ -43,7 +47,7 @@ kanban-plugin: board
 
 ```sh
 obsidian read path="Board.md"              # raw board
-obsidian search query="kanban-plugin:"     # every board file
+obsidian search query='"kanban-plugin:"'   # every board file
 obsidian tasks path="Board.md" verbose     # cards with line numbers
 ```
 
