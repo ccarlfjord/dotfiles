@@ -56,14 +56,17 @@ targets whatever tab is active in the app, which is not predictable.
   prepends exactly, with no separator. Use `inline` when building content in
   chunks.
 - `content=` supports `\n` and `\t`; quote it with single quotes so the shell
-  does not expand `$` or backticks. Keep each payload under ~8 KB; on WSL the
-  Windows command line caps at ~32 KB and oversized calls fail with `Invalid
-  argument`.
+  does not expand `$` or backticks. Obsidian's main process JSON.parses each
+  4 KB IPC read chunk as one message, so a request past that is dropped: the
+  CLI still exits 0 with no output and the app shows a JS-error dialog. The pi
+  tool chunks large `content=` for you; raw CLI calls need the file handoff
+  described under `eval`.
 - Frontmatter: `property:set path=... name=status value=active`, not hand edits.
 - `move`/`rename` rewrite wikilinks across the vault; `delete` goes to trash
   unless `permanent`.
-- For a whole-note rewrite too large for `content=` on WSL, write in `inline`
-  chunks or use `eval` (below); on native Linux just edit the file.
+- Whole-note rewrites go through `eval` (read, splice, write; there is no
+  text-replace op). The pi tool's `eval` hands large code off automatically; on
+  native Linux just edit the file.
 
 ## Tasks and dailies
 
@@ -74,9 +77,11 @@ targets whatever tab is active in the app, which is not predictable.
 
 ## eval (escape hatch, WSL/CLI)
 
-Some CLI commands are missing from the pi tool (`eval`, `history`, `sync`,
-`plugin*`, `theme*`, `random`, `wordcount`, `tabs`, `dev*`); run them with bash.
-`eval` executes JS inside the app:
+Some CLI commands are missing from the pi tool (`history`, `sync`, `plugin*`,
+`theme*`, `random`, `wordcount`, `tabs`, `dev*`); run them with bash. `eval`
+itself is a pi op, and code too large for one IPC frame is written to a temp
+file and read back by a one-line loader, so size does not matter. `eval`
+executes JS inside the app, where `require` and `process` exist:
 
 ```sh
 obsidian eval code='(async () => {
@@ -89,10 +94,18 @@ obsidian eval code='(async () => {
 The returned promise is awaited, but top-level `await` and `return` are illegal,
 so wrap code in an async IIFE. Use it only for what native ops cannot express.
 
+Through raw bash, oversized code needs the handoff done by hand: put the script
+in `/mnt/c/Users/$USER/AppData/Local/Temp/x.js`, then
+
+```sh
+obsidian eval code='(async()=>{const c=require("fs").readFileSync("C:/Users/gauz/AppData/Local/Temp/x.js","utf8");return await eval(c)})()'
+```
+
 ## Quirks
 
 - Errors print `Error: ...` on stdout and often still exit 0; check the output,
-  not the status code.
+  not the status code. An empty output from `create`/`append`/`prepend` means the
+  write was dropped, not that it succeeded quietly.
 - `files` and `folders` filter with `folder=`, not `path=`; `path=` is silently
   ignored and you get the whole vault.
 - With one vault, `vault=` is unnecessary; on native Linux with several vaults,
