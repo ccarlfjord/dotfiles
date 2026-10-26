@@ -8,6 +8,14 @@ Repositories in the `voiapp` GitHub organization are private. Always use the `gh
 
 Never act on the outside world directly. This includes GitHub comments, reviews, issue replies, Slack messages, and emails. Gather information and draft the content, then hand it to the user to send themselves. Read-only access (viewing PRs, issues, channels) is fine.
 
+**Jira comments are the exception.** Posting or updating a comment on an Atlassian issue directly is fine: it records work on an internal ticket rather than communicating outward, so no hand-off is needed. Everything else on a ticket stays with the user: transitions, assignments, field edits, and @-mentions that notify a person.
+
+## Never reference vault notes externally
+
+Anything read by other people (Jira, Slack, commits, PRs, issues, emails, docs) must stand alone. Do not link to or name Obsidian vault notes (or other local-only paths like handoff files): nobody else can reach them. Copy the needed context inline instead.
+
+Vault notes and handoffs stay a private channel between me and my agent sessions. Keeping them there is correct; the rule only bans pointing external readers at them.
+
 ## Code Comments
 
 A comment must state something a reader cannot infer from the code: intent, constraints, invariants, non-obvious reasoning, or pointers to external context (tickets, incidents, other repos). If removing it loses nothing, delete it.
@@ -43,7 +51,7 @@ Reading another repo's checkout: check its checked-out branch and `git status` f
 When work turns out to belong in another repo:
 - Do not absorb it here through copies, shims, or duplicate logic.
 - Complete this repo's share, if any, then write a self-contained handoff to `<obsidian-vault>/Handoffs/<target-repo>-<slug>-<YYYYMMDD>.md` covering: goal, why it belongs there, files/symbols with absolute paths, relevant branches/SHAs, findings so far, suggested approach, verification steps. The slug is 2-4 lowercase-hyphenated words naming the feature (source it from the goal; never vague filler like `fix`/`update`). The vault is at `~/src/voi/obsidian-voi`; the `Handoffs/` folder keeps them out of `Notes/` while staying searchable/linkable in Obsidian. Plain files, no frontmatter or special formatting required. If no Obsidian vault exists at that path (or it's not a vault), fall back to `~/handoffs/<target-repo>-<slug>-<YYYYMMDD>.md` (create the dir).
-- Report the handoff path and a one-line summary so I can start the receiving session in its own tmux window. A session told to pick up a handoff reads the reported path, or the newest `Handoffs/<its-repo>-*.md` (vault `Handoffs/` if present, else `~/handoffs/`) when only the repo name is known.
+- Report the handoff path and a one-line summary so I can start the receiving session in its own tmux window. A session told to pick up a handoff reads the reported path, or the newest `Handoffs/<its-repo>-*.md` (vault `Handoffs/` if present, else `~/handoffs/`) when only the repo name is known. The handoff is an internal note to the next session and to me: never point a PR, ticket, or Slack thread at it, and never paste its path there.
 - Do not link handoffs into `Board.md` or daily notes unless asked - handoffs are transient working state, not durable notes.
 
 ## Prefer GitHub CLI over local checkouts
