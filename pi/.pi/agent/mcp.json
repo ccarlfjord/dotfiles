@@ -9,6 +9,9 @@
         "clientId": "1601185624273.8899143856786",
         "callbackUrl": "http://localhost:3118/callback"
       }
+    },
+    "incident": {
+      "url": "https://mcp.incident.io/mcp"
     }
   }
 }

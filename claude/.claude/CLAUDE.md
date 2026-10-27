@@ -70,6 +70,16 @@ When work turns out to belong in another repo:
 
 When inspecting code, PRs, issues, or branches in *other* repositories, prefer `gh` (e.g. `gh pr view`, `gh pr diff`, `gh issue view`, `gh api`, `gh repo view`, `gh search code`) over cloning or `git fetch`-ing the repo locally. Reach for a local checkout only when `gh` cannot do what's needed (e.g. running the code, building, or multi-file edits).
 
+## Career leverage (Voi ladder)
+
+Promotion is scored on delivered, measurable impact inside the review window. In-flight work, effort and technical difficulty do not count: two multi-team migrations deprioritised in H1 2026 counted for nothing in September.
+
+- Two flagships maximum at any time. Everything else is hygiene, unblocking, or someone else's work.
+- No initiative without four answers: which business metric, the baseline, the landing date, who adopts it.
+- Landed beats planned. A slipped date means it does not count; a second silent slip is a pattern.
+- Volume is context, never the argument.
+- Load the `promotion-leverage` skill when planning, reprioritising, scoping new work, or writing check-ins and reviews. Target and criteria: vault note "2027 Promotion Case - Senior I to Senior II".
+
 ## Scope discipline
 
 Stick to the literal scope of what was asked. For an informational/scoping question, answer from what's readily knowable (a few targeted reads/greps) rather than defaulting to deep git-history archaeology or spinning up multiple subagents. Ask before escalating investigation effort, especially before launching subagents, rather than doing it proactively.
