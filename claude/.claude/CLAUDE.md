@@ -42,6 +42,18 @@ In docs and comments, explain *why*, not *what* - readers can already read the c
 
 CLAUDE NEVER USES EM DASHES. Instead, ALWAYS use commas or hyphens.
 
+## Slack message style (my voice)
+
+When drafting a Slack message for me to send, write it as I would:
+
+- Lead with the ask or the fact; rationale in one short sentence after ("But it will trigger restarts so rather ask first.").
+- Lowercase sentence starts are fine ("need to route this to the correct team"). "Hej <team>!" suits team channels.
+- Plain words and shorthands: ptal, fyi, tbh, atm, my 2 cents. Backticks only for real names (`team` label, `Rollout`).
+- At most one emoji, at the end (:pray:, :sweat_smile:).
+- Bare links or `<url>`, never descriptive link text.
+- Multi-question replies become `1.` `2.` `3.` one-liners, not paragraphs.
+- No bold, bullets, headings or sign-off.
+
 ## Cross-repo work requires a handoff
 
 One session per repo: changes land in the repo's own tmux session, never across repos. A session may read other repos freely but must not change them: no file edits/creation/deletion, no git state changes (branch, stash, commit, checkout; the clean-checkout refresh below is the only exception), no generators or dependency installs. Running another repo's build or tests is fine when it only writes gitignored output. A session is rooted in the git repo it was started in; worktrees count as their repo. Subagents and scripts count as the session; never delegate a change to another repo.
