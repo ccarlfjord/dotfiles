@@ -81,6 +81,7 @@ export async function searchJina(params: SearchParams & { apiKey: string }): Pro
 export class JinaProvider implements SearchProvider {
 	readonly id = "jina" as const;
 	readonly label = "Jina";
+	readonly parsesOperators = true;
 
 	isAvailable(): boolean {
 		return Boolean(process.env.JINA_API_KEY);

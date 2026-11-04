@@ -13,8 +13,8 @@ import { JinaProvider } from "./providers/jina";
 import { TavilyProvider } from "./providers/tavily";
 import type { SearchProvider } from "./providers/base";
 
-/** Default chain order: Brave (preferred), then the free engine, then credentialed fallbacks. */
-const DEFAULT_CHAIN: readonly SearchProviderId[] = ["brave", "duckduckgo", "tavily", "exa", "jina", "google"];
+/** Default chain order: Exa (preferred neural search), then Brave, then credentialed fallbacks. */
+const DEFAULT_CHAIN: readonly SearchProviderId[] = ["exa", "brave", "duckduckgo", "tavily", "jina", "google"];
 
 const FACTORIES: Record<SearchProviderId, () => SearchProvider> = {
 	brave: () => new BraveProvider(),
@@ -59,6 +59,33 @@ export function resolveChain(): { chain: SearchProviderId[]; invalid: string[] }
 	return { chain, invalid };
 }
 
+/**
+ * Query syntax only keyword engines can honor. `site:`/`-site:` are excluded
+ * because the Exa provider lifts them into `includeDomains`/`excludeDomains`.
+ */
+const OPERATOR_PATTERNS: readonly RegExp[] = [
+	/\b(?:inurl|intitle|intext|filetype):/i,
+	/(?:^|\s)-[\w"'(@]/,
+	/\bOR\b/,
+	/"[^"]+"/,
+];
+
+/** Whether the query uses operator syntax that Exa would embed as prose (a leading `-` needs whitespace to avoid matching hyphens). */
+export function queryUsesOperators(query: string): boolean {
+	return OPERATOR_PATTERNS.some(re => re.test(query));
+}
+
+/**
+ * Demote providers that embed the query as prose when operators are present:
+ * Exa would otherwise swallow `intitle:`/quotes as part of the description.
+ */
+function orderForQuery(chain: readonly SearchProviderId[], usesOperators: boolean): SearchProviderId[] {
+	if (!usesOperators) return [...chain];
+	const aware = chain.filter(id => getProvider(id).parsesOperators);
+	const proseOnly = chain.filter(id => !getProvider(id).parsesOperators);
+	return [...aware, ...proseOnly];
+}
+
 /** Format one provider failure for the user-facing fallback summary. */
 export function formatSearchProviderFailure(error: unknown): string {
 	if (error instanceof SearchProviderError) return error.message;
@@ -88,9 +115,10 @@ export async function runSearchChain(params: SearchParams): Promise<ChainResult>
 	await loadCredentials();
 
 	const { chain, invalid } = resolveChain();
+	const ordered = orderForQuery(chain, queryUsesOperators(params.query));
 	const failures: ChainFailure[] = [];
 
-	for (const id of chain) {
+	for (const id of ordered) {
 		const provider = getProvider(id);
 		if (!provider.isAvailable()) {
 			failures.push({ provider: id, label: provider.label, error: new SearchProviderError(id, "not configured (missing credentials)") });

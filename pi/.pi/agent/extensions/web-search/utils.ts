@@ -3,6 +3,8 @@
  * Ported from oh-my-pi `src/web/search/utils.ts` and `providers/utils.ts`.
  */
 
+import type { Recency } from "./types";
+
 /** Calculate age in seconds from an ISO date string. Returns undefined on invalid input. */
 export function dateToAgeSeconds(dateStr: string | null | undefined): number | undefined {
 	if (!dateStr) return undefined;
@@ -31,6 +33,15 @@ export function withHardTimeout(signal: AbortSignal | undefined, timeoutMs: numb
 }
 
 export const DEFAULT_SEARCH_TIMEOUT_MS = 30_000;
+
+/** `Recency` → lookback window, for backends that want a date bound rather than a shorthand. */
+const RECENCY_LOOKBACK_DAYS: Record<Recency, number> = { day: 1, week: 7, month: 31, year: 365 };
+
+/** ISO start date for a recency window, or undefined when no window was requested. */
+export function recencyStartDate(recency: Recency | undefined, nowMs = Date.now()): string | undefined {
+	if (!recency) return undefined;
+	return new Date(nowMs - RECENCY_LOOKBACK_DAYS[recency] * 86_400_000).toISOString();
+}
 
 /** Format age in seconds as a compact human string ("3d", "2mo", "1y"). */
 export function formatAge(seconds: number | undefined): string | undefined {

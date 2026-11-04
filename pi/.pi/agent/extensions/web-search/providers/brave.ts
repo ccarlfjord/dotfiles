@@ -87,6 +87,7 @@ export async function searchBrave(params: SearchParams & { apiKey: string }): Pr
 export class BraveProvider implements SearchProvider {
 	readonly id = "brave" as const;
 	readonly label = "Brave";
+	readonly parsesOperators = true;
 
 	isAvailable(): boolean {
 		return Boolean(process.env.BRAVE_API_KEY);

@@ -10,6 +10,9 @@ export abstract class SearchProvider {
 	abstract readonly id: SearchProviderId;
 	abstract readonly label: string;
 
+	/** Whether the backend parses keyword operators (`intitle:`, quotes, `OR`) instead of embedding the query as prose. */
+	abstract readonly parsesOperators: boolean;
+
 	/** Whether this provider can run right now (credentials present, endpoint configured). */
 	abstract isAvailable(): boolean;
 

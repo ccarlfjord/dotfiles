@@ -263,6 +263,7 @@ export async function searchDuckDuckGo(params: SearchParams): Promise<SearchResp
 export class DuckDuckGoProvider implements SearchProvider {
 	readonly id = "duckduckgo" as const;
 	readonly label = "DuckDuckGo";
+	readonly parsesOperators = true;
 
 	isAvailable(): boolean {
 		return true;
