@@ -7,5 +7,8 @@ node_modules/
 # stray unix socket at repo root
 dotfiles
 
+# per-branch checkouts created by `git worktree add`
+.worktrees/
+
 # pi auto-refreshes this catalog; live copy stays in ~/.pi, never in git
 pi/.pi/agent/models-store.json
