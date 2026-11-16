@@ -10,6 +10,10 @@ Never act on the outside world directly. This includes GitHub comments, reviews,
 
 **Jira comments are the exception.** Posting or updating a comment on an Atlassian issue directly is fine: it records work on an internal ticket rather than communicating outward, so no hand-off is needed. Everything else on a ticket stays with the user: transitions, assignments, field edits, and @-mentions that notify a person.
 
+## Jira site
+
+Call `getAccessibleAtlassianResources` before Jira MCP calls; it lists every granted site with its cloud ID.
+
 ## Never reference vault notes externally
 
 Anything read by other people (Jira, Slack, commits, PRs, issues, emails, docs) must stand alone. Do not link to or name Obsidian vault notes (or other local-only paths like handoff files): nobody else can reach them. Copy the needed context inline instead.
@@ -54,16 +58,17 @@ When drafting a Slack message for me to send, write it as I would:
 - Multi-question replies become `1.` `2.` `3.` one-liners, not paragraphs.
 - No bold, bullets, headings or sign-off.
 
-## Cross-repo work requires a handoff
+## Cross-repo and cross-session work requires a handoff
 
-One session per repo: changes land in the repo's own tmux session, never across repos. A session may read other repos freely but must not change them: no file edits/creation/deletion, no git state changes (branch, stash, commit, checkout; the clean-checkout refresh below is the only exception), no generators or dependency installs. Running another repo's build or tests is fine when it only writes gitignored output. A session is rooted in the git repo it was started in; worktrees count as their repo. Subagents and scripts count as the session; never delegate a change to another repo.
+One session per repo: changes land in the repo's own tmux session, never across repos. A session may read other repos freely but must not change them: no file edits/creation/deletion, no git state changes (branch, stash, commit, checkout; the clean-checkout refresh below is the only exception), no generators or dependency installs. Running another repo's build or tests is fine when it only writes gitignored output. A session is rooted in the checkout it was started in, and a worktree is a session of its own, not an extension of the one that created it. Subagents and scripts count as the session; never delegate a change to another repo.
 
 Reading another repo's checkout: check its checked-out branch and `git status` first. If the tree is dirty, read the code from the source (GitHub, via `gh`) at the default branch instead of trusting disk. If the tree is clean and no stash applies to it, it is OK to switch it to main/the default branch and pull to refresh it for reading.
 
-When work turns out to belong in another repo:
+When work turns out to belong in a session other than this one:
 - Do not absorb it here through copies, shims, or duplicate logic.
 - Complete this repo's share, if any, then write a self-contained handoff to `<obsidian-vault>/Handoffs/<target-repo>-<slug>-<YYYYMMDD>.md` covering: goal, why it belongs there, files/symbols with absolute paths, relevant branches/SHAs, findings so far, suggested approach, verification steps. The slug is 2-4 lowercase-hyphenated words naming the feature (source it from the goal; never vague filler like `fix`/`update`). The vault is at `~/src/voi/obsidian-voi`; the `Handoffs/` folder keeps them out of `Notes/` while staying searchable/linkable in Obsidian. Plain files, no frontmatter or special formatting required. If no Obsidian vault exists at that path (or it's not a vault), fall back to `~/handoffs/<target-repo>-<slug>-<YYYYMMDD>.md` (create the dir).
 - Report the handoff path and a one-line summary so I can start the receiving session in its own tmux window. A session told to pick up a handoff reads the reported path, or the newest `Handoffs/<its-repo>-*.md` (vault `Handoffs/` if present, else `~/handoffs/`) when only the repo name is known. The handoff is an internal note to the next session and to me: never point a PR, ticket, or Slack thread at it, and never paste its path there.
+- Same repo, different session (a worktree, see Git worktrees): create the worktree and write the handoff under the same name, target `<repo>` and slug the worktree slug, so the `<repo>_<slug>` session finds the newest `Handoffs/<repo>-<slug>-*.md` without being told.
 - Do not link handoffs into `Board.md` or daily notes unless asked - handoffs are transient working state, not durable notes.
 
 ## Prefer GitHub CLI over local checkouts
@@ -88,15 +93,35 @@ Stick to the literal scope of what was asked. For an informational/scoping quest
 
 Plan-mode plan files should be super short and to the point: a brief context blurb, a tight list of changes, a short verification note. Not exhaustive prose with extensive rationale for every sub-decision.
 
+## Git worktrees
+
+A worktree is a session, not a corner of this one: `<repo>_<slug>` owns the edits, commits and history there, so creating one means handing the work over rather than continuing in it.
+
+Reach for one when it is the genuinely cleaner path: the checkout is dirty with work that isn't this task's, or it sits on another branch mid-work. That beats stashing, or committing around someone else's changes. Otherwise a branch in the current checkout is fine.
+
+Per-branch checkouts go in `<repo>/.worktrees/<slug>/`, slug being the branch name made path-safe. `~/.gitignore` (the global excludesFile) already ignores `.worktrees`, so repos need no ignore entry. `tms.sh` scans those dirs and names their tmux session `<repo>_<slug>`.
+
+```bash
+git -C <repo> worktree add .worktrees/<slug> -b <branch>
+```
+
+To hand over: branch off the base branch, create the worktree, write the handoff, and report its path so I can open `<repo>_<slug>`. Do not edit, commit or run generators in it from here; that session does the work, commits and pushes its own branch.
+
+The receiving session removes its own worktree once the branch is merged, with `git worktree remove .worktrees/<slug>`, not `rm -rf` (plain deletion leaves the admin files behind, `git worktree prune` only cleans those up afterwards).
+
 ## Git commits and pull requests
 
-NEVER commit. NEVER push. These are prohibited outright, not approval-gated: no user approval, urgency, CI state, or instruction ever overrides this.
+Commit when the task is done. Push is allowed by default on a branch the agent created for this work. Anything beyond that still needs my explicit word in this conversation ("push this", "open a PR"): pushing to a shared branch, force-pushing, opening or merging a PR. Silence and task context ("ship it") do not count, and CI being green is not permission. If I approved the change but not the publishing action, finish with a summary of the diff and stop.
 
-- Every route counts: `git commit` in any form (`--amend`, `--no-verify`, aliases, hooks, scripts), `git push` in any form (including force-push and tags), squash/rebase merges that produce commits, and PRs created, updated, or merged via `gh`, the web UI, or an API.
-- Delegation counts: instructing a subagent, script, or other tool to commit, push, or open a PR is the same as doing it yourself.
-- Rewriting history on a pushed branch (`rebase`, `reset --hard` followed by push) counts as both a commit and a destructive action.
-- Leave changes uncommitted in the working tree for the user to review and commit themselves.
-- Ask-first gate: the only permitted trigger for any commit/push/PR action is the user's explicit instruction in the current conversation ("push this", "open a PR"). Silence, task context ("ship it"), prior approvals in other sessions, or CI conventions do NOT count. If the user has approved the change but not the publishing action, finish with a summary of the diff and stop.
+- One logical change per commit. Don't bundle unrelated edits, and don't commit files the task didn't touch.
+- Read `git status` first, then stage by path. Never `git add -A` or `git add .`: the tree may hold my work in progress.
+- Write against the base branch, not against this branch's history. The message describes the final state vs main, so drop anything that was added and then reworked or deleted along the way. Never mention removing something main never had: "remove the foo shim" is wrong when the shim was born on this branch.
+- Re-read the diff the way a reviewer will see it against main before committing, and drop iteration debris that no longer earns its place.
+- Conventional commits (`feat:`, `fix(scope):`, `chore:`, `docs:`). Imperative subject under 72 chars; body only when the why needs explaining.
+- Never bypass hooks (`--no-verify`, `--no-gpg-sign`). If a hook or test fails, fix the cause or hand it back. Don't commit red.
+- Amend, rebase, fixup and squash are fine on this session's own unpushed commits, to leave a clean final state. Never rewrite a pushed commit, and never rewrite anyone else's.
+- Cross-repo and delegation rules still hold: never commit, push, or rewrite history in a repo the session is only reading, and never delegate a commit to a subagent or script.
+- After committing, tell me the SHA and one line on what is in it.
 
 ## Never run destructive commands
 
