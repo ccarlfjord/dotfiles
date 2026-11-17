@@ -99,7 +99,7 @@ A worktree is a session, not a corner of this one: `<repo>_<slug>` owns the edit
 
 Reach for one when it is the genuinely cleaner path: the checkout is dirty with work that isn't this task's, or it sits on another branch mid-work. That beats stashing, or committing around someone else's changes. Otherwise a branch in the current checkout is fine.
 
-Per-branch checkouts go in `<repo>/.worktrees/<slug>/`, slug being the branch name made path-safe. `~/.gitignore` (the global excludesFile) already ignores `.worktrees`, so repos need no ignore entry. `tms.sh` scans those dirs and names their tmux session `<repo>_<slug>`.
+Per-branch checkouts go in `<repo>/.worktrees/<slug>/`, slug being the branch name made path-safe (Branch names below). `~/.gitignore` (the global excludesFile) already ignores `.worktrees`, so repos need no ignore entry. `tms.sh` scans those dirs and names their tmux session `<repo>_<slug>`.
 
 ```bash
 git -C <repo> worktree add .worktrees/<slug> -b <branch>
@@ -113,6 +113,7 @@ The receiving session removes its own worktree once the branch is merged, with `
 
 Commit when the task is done. Push is allowed by default on a branch the agent created for this work. Anything beyond that still needs my explicit word in this conversation ("push this", "open a PR"): pushing to a shared branch, force-pushing, opening or merging a PR. Silence and task context ("ship it") do not count, and CI being green is not permission. If I approved the change but not the publishing action, finish with a summary of the diff and stop.
 
+- Branch names carry the Jira key when one is obvious: `dip-1234-short-slug`, lowercase key, hyphens, no slashes. Obvious means I named the ticket or the work came out of it. Never search Jira for a plausible match, and use no key when there isn't one.
 - One logical change per commit. Don't bundle unrelated edits, and don't commit files the task didn't touch.
 - Read `git status` first, then stage by path. Never `git add -A` or `git add .`: the tree may hold my work in progress.
 - Write against the base branch, not against this branch's history. The message describes the final state vs main, so drop anything that was added and then reworked or deleted along the way. Never mention removing something main never had: "remove the foo shim" is wrong when the shim was born on this branch.
