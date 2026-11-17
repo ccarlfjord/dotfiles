@@ -117,11 +117,35 @@ Commit when the task is done. Push is allowed by default on a branch the agent c
 - Read `git status` first, then stage by path. Never `git add -A` or `git add .`: the tree may hold my work in progress.
 - Write against the base branch, not against this branch's history. The message describes the final state vs main, so drop anything that was added and then reworked or deleted along the way. Never mention removing something main never had: "remove the foo shim" is wrong when the shim was born on this branch.
 - Re-read the diff the way a reviewer will see it against main before committing, and drop iteration debris that no longer earns its place.
-- Conventional commits (`feat:`, `fix(scope):`, `chore:`, `docs:`). Imperative subject under 72 chars; body only when the why needs explaining.
+- Conventional commits (`feat:`, `fix(scope):`, `chore:`, `docs:`) with an imperative subject under 72 chars. Body only per Commit messages below.
 - Never bypass hooks (`--no-verify`, `--no-gpg-sign`). If a hook or test fails, fix the cause or hand it back. Don't commit red.
 - Amend, rebase, fixup and squash are fine on this session's own unpushed commits, to leave a clean final state. Never rewrite a pushed commit, and never rewrite anyone else's.
 - Cross-repo and delegation rules still hold: never commit, push, or rewrite history in a repo the session is only reading, and never delegate a commit to a subagent or script.
 - After committing, tell me the SHA and one line on what is in it.
+
+## Commit messages
+
+The subject states the change and is usually the whole message. A body is earned only by a breaking change, a deploy or migration step someone must run, or a fix whose cause a reviewer would misread from the diff. "It explains the why" is not a trigger: most diffs explain themselves.
+
+- Max 3 lines, no bullets, never a list of files.
+- No process narration ("first refactored the writer, then wired the flag"). It states the end state vs main, like everything else here.
+
+## PR descriptions
+
+Two numbered sections, one line per item, max 5 items each:
+
+```markdown
+## Changes
+1. Helm chart stops writing the deprecated `scheduler` flag
+2. Runner image pinned to the digest CI builds
+
+## Verification
+1. `helm template .` shows no `scheduler` key
+2. Deployed to staging, pods stayed Ready for 10 min
+```
+
+- Whole body under ~15 lines. Over that, cut from the top: background, motivation, file lists, the investigation story, anything the diff or the ticket already says.
+- Verification means commands, clicks or observed results. A plan is not verification.
 
 ## Never run destructive commands
 
